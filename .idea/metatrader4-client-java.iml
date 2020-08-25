@@ -11,5 +11,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Maven: org.zeromq:jeromq:0.5.3-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: eu.neilalexander:jnacl:1.0.0" level="project" />
   </component>
 </module>
