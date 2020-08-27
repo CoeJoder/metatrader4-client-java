@@ -5,6 +5,7 @@ package human.coejoder.mt4client.api;
  *
  * @see <a href="https://docs.mql4.com/constants/environment_state/accountinformation#enum_account_info_double">ENUM_ACCOUNT_INFO_DOUBLE</a>
  */
+@SuppressWarnings("unused")
 public enum AccountInfoDouble {
     ACCOUNT_BALANCE(37),
     ACCOUNT_CREDIT(38),
