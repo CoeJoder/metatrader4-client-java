@@ -4,17 +4,21 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import human.coejoder.mt4client.api.MT4Exception;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.zeromq.SocketType;
 import org.zeromq.ZContext;
 import org.zeromq.ZMQ;
 
 public class MT4Client implements AutoCloseable {
 
+    private static final Logger LOG = LoggerFactory.getLogger(MT4Client.class);
     private static final ObjectMapper jsonMapper = new ObjectMapper();
     private static final int ENABLED = 1;
     private static final int DEFAULT_REQUEST_TIMEOUT_MILLIS = 10000;
     private static final int DEFAULT_RESPONSE_TIMEOUT_MILLIS = 10000;
-    private static final boolean VERBOSE = false;
+    private static final boolean DEFAULT_VERBOSE = false;
     private static final String ERROR_CODE = "error_code";
     private static final String ERROR_CODE_DESCRIPTION = "error_code_description";
     private static final String ERROR_MESSAGE = "error_message";
@@ -23,7 +27,7 @@ public class MT4Client implements AutoCloseable {
 
     private final ZContext context;
     private final ZMQ.Socket socket;
-    private boolean verbose = false;
+    private boolean verbose = DEFAULT_VERBOSE;
 
     /**
      * Constructor.  Initialize the REQ socket and connect to the MT4 server.
@@ -76,7 +80,7 @@ public class MT4Client implements AutoCloseable {
      * @param request   The request to send.  Must have an `action` property.
      * @return          The server response.
      */
-    protected JsonNode getResponse(ObjectNode request) throws JsonProcessingException {
+    protected JsonNode getResponse(ObjectNode request) throws JsonProcessingException, MT4Exception {
         String strRequest = request.toString();
         socket.send(strRequest);
         printTrace("Request: " + strRequest);
@@ -89,13 +93,12 @@ public class MT4Client implements AutoCloseable {
         JsonNode errorCodeDescription = response.get(ERROR_CODE_DESCRIPTION);
         JsonNode errorMessage = response.get(ERROR_MESSAGE);
         if (errorCode != null || errorCodeDescription != null || errorMessage != null) {
-            //TODO create MT4Exception class
-            throw new RuntimeException("Server-side error!");
+            throw new MT4Exception(errorCode, errorCodeDescription, errorMessage);
         }
 
-        // print any warnings to stdout
+        // log any warnings
         if (response.has(WARNING)) {
-            System.out.println(response.get(WARNING).asText());
+            LOG.warn(response.get(WARNING).asText());
         }
 
         // unwrap the response
