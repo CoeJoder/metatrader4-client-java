@@ -1,3 +1,67 @@
 # Default ignored files
 /shelf/
 /workspace.xml
+
+### The below is an edit of the file generated at:
+### https://www.gitignore.io/api/jetbrains
+
+# User-specific stuff
+/**/workspace.xml
+/**/tasks.xml
+/**/usage.statistics.xml
+#/**/dictionaries
+/**/shelf
+
+# Sensitive or high-churn files
+/**/dataSources/
+/**/dataSources.ids
+/**/dataSources.local.xml
+/**/sqlDataSources.xml
+/**/dynamic.xml
+/**/uiDesigner.xml
+/**/dbnavigator.xml
+
+# Gradle/Maven
+/**/gradle.xml
+/**/libraries
+
+# Gradle and Maven with auto-import
+# When using Gradle or Maven with auto-import, you should exclude module files,
+# since they will be recreated, and may cause churn.  Uncomment if using
+# auto-import.
+/artifacts
+/compiler.xml
+/jarRepositories.xml
+/modules.xml
+/*.iml
+/modules
+
+# Editor-based Rest Client
+/httpRequests
+
+### JetBrains Patch ###
+# Comment Reason: https://github.com/joeblau/gitignore.io/issues/186#issuecomment-215987721
+# [CJ] uncommenting this for now
+/misc.xml
+
+# Sonarlint plugin
+# https://plugins.jetbrains.com/plugin/7973-sonarlint
+/**/sonarlint/
+
+# SonarQube Plugin
+# https://plugins.jetbrains.com/plugin/7238-sonarqube-community-plugin
+/**/sonarIssues.xml
+
+# Markdown Navigator plugin
+# https://plugins.jetbrains.com/plugin/7896-markdown-navigator-enhanced
+/**/markdown-navigator.xml
+/**/markdown-navigator-enh.xml
+/**/markdown-navigator/
+
+# Cache file creation bug
+# See https://youtrack.jetbrains.com/issue/JBR-2257
+/$CACHE_FILE$
+
+# CodeStream plugin
+# https://plugins.jetbrains.com/plugin/12206-codestream
+/codestream.xml
