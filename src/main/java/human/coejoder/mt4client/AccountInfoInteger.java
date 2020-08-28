@@ -1,4 +1,4 @@
-package human.coejoder.mt4client.api;
+package human.coejoder.mt4client;
 
 /**
  * MetaTrader 4 account properties which return an integer.

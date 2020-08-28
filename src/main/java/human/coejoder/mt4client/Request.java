@@ -1,4 +1,4 @@
-package human.coejoder.mt4client.api;
+package human.coejoder.mt4client;
 
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -28,6 +28,11 @@ public enum Request {
 
     private static final String ACTION = "action";
 
+    /**
+     * Initialize a JSON request object.
+     *
+     * @return The JSON request object with the {@value #ACTION} property set.
+     */
     public ObjectNode build() {
         return JsonNodeFactory.instance.objectNode()
                 .put(ACTION, Request.this.toString());

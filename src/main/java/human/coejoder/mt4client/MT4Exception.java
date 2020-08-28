@@ -1,10 +1,8 @@
-package human.coejoder.mt4client.api;
+package human.coejoder.mt4client;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.EnumSet;
 
 /**
  * Represents an error from the MT4 terminal/server.
@@ -216,6 +214,8 @@ public class MT4Exception extends Exception {
         ERR_WEBREQUEST_REQUEST_FAILED(5203),
         ERR_USER_ERROR_FIRST(65536);
 
+        private static final ErrorCode[] COPY_OF_VALUES = values();
+
         public final int id;
 
         ErrorCode(int id) {
@@ -223,7 +223,7 @@ public class MT4Exception extends Exception {
         }
 
         public static ErrorCode parse(int intCode) {
-            for (ErrorCode code : EnumSet.allOf(ErrorCode.class)) {
+            for (ErrorCode code : COPY_OF_VALUES) {
                 if (intCode == code.id) {
                     return code;
                 }
