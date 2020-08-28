@@ -56,7 +56,7 @@
 # https://plugins.jetbrains.com/plugin/7896-markdown-navigator-enhanced
 /**/markdown-navigator.xml
 /**/markdown-navigator-enh.xml
-/**/markdown-navigator/
+/**/markdown-navigator
 
 # Cache file creation bug
 # See https://youtrack.jetbrains.com/issue/JBR-2257
