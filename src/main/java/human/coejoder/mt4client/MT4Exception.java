@@ -4,6 +4,11 @@ import com.fasterxml.jackson.databind.JsonNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Map;
+import java.util.stream.Stream;
+
+import static java.util.stream.Collectors.toMap;
+
 /**
  * Represents an error from the MT4 terminal/server.
  */
@@ -23,7 +28,7 @@ public class MT4Exception extends Exception {
      * @param message              Additional details about the error.
      */
     public MT4Exception(JsonNode errorCode, JsonNode errorCodeDescription, JsonNode message) {
-        this.errorCode = (errorCode == null ? ErrorCode.UNKNOWN : ErrorCode.parse(errorCode.asInt(ErrorCode.UNKNOWN.id)));
+        this.errorCode = (errorCode == null ? ErrorCode.UNKNOWN : ErrorCode.fromCode(errorCode.asInt(ErrorCode.UNKNOWN.id)));
         this.errorCodeDescription = (errorCodeDescription == null ? null : errorCodeDescription.asText(null));
         this.message = (message == null ? null : message.asText(null));
     }
@@ -214,7 +219,9 @@ public class MT4Exception extends Exception {
         ERR_WEBREQUEST_REQUEST_FAILED(5203),
         ERR_USER_ERROR_FIRST(65536);
 
-        private static final ErrorCode[] COPY_OF_VALUES = values();
+        private static final Map<Integer, ErrorCode> CODE_TO_ENUM = Stream.of(values()).collect(
+                toMap(e -> e.id, e -> e)
+        );
 
         public final int id;
 
@@ -222,14 +229,13 @@ public class MT4Exception extends Exception {
             this.id = id;
         }
 
-        public static ErrorCode parse(int intCode) {
-            for (ErrorCode code : COPY_OF_VALUES) {
-                if (intCode == code.id) {
-                    return code;
-                }
+        public static ErrorCode fromCode(int code) {
+            var errorCode = CODE_TO_ENUM.get(code);
+            if (errorCode == null) {
+                LOG.error("Unrecognized error code: " + code);
+                return ErrorCode.UNKNOWN;
             }
-            LOG.error("Unknown error code: " + intCode);
-            return ErrorCode.UNKNOWN;
+            return errorCode;
         }
     }
 }
