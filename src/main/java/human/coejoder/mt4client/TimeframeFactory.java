@@ -11,6 +11,7 @@ public enum TimeframeFactory {
     private static final int GROUP_COUNT = 2;
     private static final Pattern PATTERN = Pattern.compile(REGEX, Pattern.CASE_INSENSITIVE);
     private static final String PREFIX = "PERIOD_";
+    private static final String PERIOD_CURRENT = "0";
 
     /**
      * Parses a timeframe string.
@@ -19,6 +20,9 @@ public enum TimeframeFactory {
      * @return A valid {@link Timeframe} object, or empty if timeframe is invalid or parsing fails.
      */
     public Optional<Timeframe> build(String strTimeframe) {
+        if (PERIOD_CURRENT.equals(strTimeframe)) {
+            return Optional.of(StandardTimeframe.PERIOD_CURRENT);
+        }
         Matcher m = PATTERN.matcher(strTimeframe);
         if (m.matches() && m.groupCount() == GROUP_COUNT) {
             String name = PREFIX + m.group(2).toUpperCase() + m.group(1);

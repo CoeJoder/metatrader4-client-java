@@ -7,6 +7,9 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+/**
+ * Integration tests for {@link Account}.
+ */
 public class TestAccount {
 
     private static final Logger LOG = LoggerFactory.getLogger(TestAccount.class);
