@@ -16,7 +16,7 @@ public class MT4Exception extends Exception {
 
     private static final Logger LOG = LoggerFactory.getLogger(MT4Exception.class);
 
-    private final ErrorCode errorCode;
+    private final Code errorCode;
     private final String errorCodeDescription;
     private final String message;
 
@@ -28,7 +28,7 @@ public class MT4Exception extends Exception {
      * @param message              Additional details about the error.
      */
     public MT4Exception(JsonNode errorCode, JsonNode errorCodeDescription, JsonNode message) {
-        this.errorCode = (errorCode == null ? ErrorCode.UNKNOWN : ErrorCode.fromCode(errorCode.asInt(ErrorCode.UNKNOWN.id)));
+        this.errorCode = (errorCode == null ? Code.UNKNOWN : Code.fromCode(errorCode.asInt(Code.UNKNOWN.id)));
         this.errorCodeDescription = (errorCodeDescription == null ? null : errorCodeDescription.asText(null));
         this.message = (message == null ? null : message.asText(null));
     }
@@ -55,7 +55,7 @@ public class MT4Exception extends Exception {
      * @see <a href="https://docs.mql4.com/constants/errorswarnings/errorcodes">errorcodes</a>
      */
     @SuppressWarnings("unused")
-    public enum ErrorCode {
+    public enum Code {
         UNKNOWN(-1),
         ERR_NO_ERROR(0),
         ERR_NO_RESULT(1),
@@ -219,21 +219,21 @@ public class MT4Exception extends Exception {
         ERR_WEBREQUEST_REQUEST_FAILED(5203),
         ERR_USER_ERROR_FIRST(65536);
 
-        private static final Map<Integer, ErrorCode> CODE_TO_ENUM = Stream.of(values()).collect(
+        private static final Map<Integer, Code> CODE_TO_ENUM = Stream.of(values()).collect(
                 toMap(e -> e.id, e -> e)
         );
 
         public final int id;
 
-        ErrorCode(int id) {
+        Code(int id) {
             this.id = id;
         }
 
-        public static ErrorCode fromCode(int code) {
+        public static Code fromCode(int code) {
             var errorCode = CODE_TO_ENUM.get(code);
             if (errorCode == null) {
                 LOG.error("Unrecognized error code: " + code);
-                return ErrorCode.UNKNOWN;
+                return Code.UNKNOWN;
             }
             return errorCode;
         }
