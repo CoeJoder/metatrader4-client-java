@@ -1,6 +1,7 @@
 package human.coejoder.mt4client;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -9,6 +10,8 @@ import org.slf4j.LoggerFactory;
 import org.zeromq.SocketType;
 import org.zeromq.ZContext;
 import org.zeromq.ZMQ;
+
+import java.util.List;
 
 public class MT4Client implements AutoCloseable {
 
@@ -22,6 +25,7 @@ public class MT4Client implements AutoCloseable {
     private static final String ERROR_MESSAGE = "error_message";
     private static final String WARNING = "warning";
     private static final String RESPONSE = "response";
+    private static final TypeReference<List<String>> LIST_OF_STRINGS = new TypeReference<>() {};
 
     private final ZContext context;
     private final ZMQ.Socket socket;
@@ -74,6 +78,17 @@ public class MT4Client implements AutoCloseable {
      */
     public Account getAccount() throws JsonProcessingException, MT4Exception {
         return new Account(this, getResponse(Request.GET_ACCOUNT_INFO.build()));
+    }
+
+    /**
+     * Get the names of market symbols supported by the broker.
+     *
+     * @return A list of symbol names.
+     * @throws JsonProcessingException If JSON response fails to parse.
+     * @throws MT4Exception            If server had an error.
+     */
+    public List<String> getSymbolNames() throws JsonProcessingException, MT4Exception {
+        return JSON_MAPPER.convertValue(getResponse(Request.GET_SYMBOLS.build()), LIST_OF_STRINGS);
     }
 
     /**
