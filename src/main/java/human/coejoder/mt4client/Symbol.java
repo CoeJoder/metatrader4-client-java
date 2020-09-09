@@ -19,10 +19,6 @@ public class Symbol {
     private static final String MIN_LOT = "min_lot";
     private static final String LOT_STEP = "lot_step";
     private static final String MAX_LOT = "max_lot";
-    private static final String MARGIN_INIT = "margin_init";
-    private static final String MARGIN_MAINTENANCE = "margin_maintenance";
-    private static final String MARGIN_HEDGED = "margin_hedged";
-    private static final String MARGIN_REQUIRED = "margin_required";
     private static final String STOP_LEVEL = "stop_level";
     private static final String FREEZE_LEVEL = "freeze_level";
     private static final String SYMBOL = "symbol";
@@ -75,26 +71,6 @@ public class Symbol {
     public final double maxLot;
 
     /**
-     * Initial margin requirements for 1 lot.
-     */
-    public final double marginInit;
-
-    /**
-     * Margin to maintain open orders calculated for 1 lot.
-     */
-    public final double marginMaintenance;
-
-    /**
-     * Hedged margin calculated for 1 lot.
-     */
-    public final double marginHedged;
-
-    /**
-     * Free margin required to open 1 lot for buying.
-     */
-    public final double marginRequired;
-
-    /**
      * Stop level in points.
      */
     public final double stopLevel;
@@ -121,10 +97,6 @@ public class Symbol {
         this.minLot = response.get(MIN_LOT).asDouble();
         this.lotStep = response.get(LOT_STEP).asDouble();
         this.maxLot = response.get(MAX_LOT).asDouble();
-        this.marginInit = response.get(MARGIN_INIT).asDouble();
-        this.marginMaintenance = response.get(MARGIN_MAINTENANCE).asDouble();
-        this.marginHedged = response.get(MARGIN_HEDGED).asDouble();
-        this.marginRequired = response.get(MARGIN_REQUIRED).asDouble();
         this.stopLevel = response.get(STOP_LEVEL).asDouble();
         this.freezeLevel = response.get(FREEZE_LEVEL).asDouble();
     }
@@ -153,10 +125,6 @@ public class Symbol {
                 ", minLot=" + minLot +
                 ", lotStep=" + lotStep +
                 ", maxLot=" + maxLot +
-                ", marginInit=" + marginInit +
-                ", marginMaintenance=" + marginMaintenance +
-                ", marginHedged=" + marginHedged +
-                ", marginRequired=" + marginRequired +
                 ", stopLevel=" + stopLevel +
                 ", freezeLevel=" + freezeLevel +
                 '}';
