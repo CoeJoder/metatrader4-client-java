@@ -11,74 +11,30 @@ import com.fasterxml.jackson.databind.JsonNode;
 public class Symbol {
 
     private static final String NAME = "name";
-    private static final String POINT_SIZE = "point_size";
+    private static final String POINT = "point";
     private static final String DIGITS = "digits";
-    private static final String LOT_SIZE = "lot_size";
-    private static final String TICK_VALUE = "tick_value";
-    private static final String TICK_SIZE = "tick_size";
-    private static final String MIN_LOT = "min_lot";
-    private static final String LOT_STEP = "lot_step";
-    private static final String MAX_LOT = "max_lot";
-    private static final String STOP_LEVEL = "stop_level";
-    private static final String FREEZE_LEVEL = "freeze_level";
+    private static final String VOLUME_MIN = "volume_min";
+    private static final String VOLUME_STEP = "volume_step";
+    private static final String VOLUME_MAX = "volume_max";
+    private static final String TRADE_CONTRACT_SIZE = "trade_contract_size";
+    private static final String TRADE_TICK_VALUE = "trade_tick_value";
+    private static final String TRADE_TICK_SIZE = "trade_tick_size";
+    private static final String TRADE_STOPS_LEVEL = "trade_stops_level";
+    private static final String TRADE_FREEZE_LEVEL = "trade_freeze_level";
     private static final String SYMBOL = "symbol";
 
     private final MT4Client mt4;
-
-    /**
-     * Symbol name.
-     */
-    public final String name;
-
-    /**
-     * Point size in the quote currency.
-     */
-    public final double pointSize;
-
-    /**
-     * Digits after decimal point.
-     */
-    public final int digits;
-
-    /**
-     * Lot size in the base currency.
-     */
-    public final double lotSize;
-
-    /**
-     * Tick value in the deposit currency.
-     */
-    public final double tickValue;
-
-    /**
-     * Tick size in points.
-     */
-    public final double tickSize;
-
-    /**
-     * Minimum permitted amount of a lot.
-     */
-    public final double minLot;
-
-    /**
-     * Step for changing lots.
-     */
-    public final double lotStep;
-
-    /**
-     * Maximum permitted amount of a lot.
-     */
-    public final double maxLot;
-
-    /**
-     * Stop level in points.
-     */
-    public final double stopLevel;
-
-    /**
-     * Order freeze level in points.
-     */
-    public final double freezeLevel;
+    private final String name;
+    private final double point;
+    private final int digits;
+    private final double volumeMin;
+    private final double volumeStep;
+    private final double volumeMax;
+    private final double tradeContractSize;
+    private final double tradeTickValue;
+    private final double tradeTickSize;
+    private final int tradeStopsLevel;
+    private final int tradeFreezeLevel;
 
     /**
      * Package-private constructor.
@@ -89,16 +45,115 @@ public class Symbol {
     Symbol(MT4Client mt4, JsonNode response) {
         this.mt4 = mt4;
         this.name = response.get(NAME).asText();
-        this.pointSize = response.get(POINT_SIZE).asDouble();
+        this.point = response.get(POINT).asDouble();
         this.digits = response.get(DIGITS).asInt();
-        this.lotSize = response.get(LOT_SIZE).asDouble();
-        this.tickValue = response.get(TICK_VALUE).asDouble();
-        this.tickSize = response.get(TICK_SIZE).asDouble();
-        this.minLot = response.get(MIN_LOT).asDouble();
-        this.lotStep = response.get(LOT_STEP).asDouble();
-        this.maxLot = response.get(MAX_LOT).asDouble();
-        this.stopLevel = response.get(STOP_LEVEL).asDouble();
-        this.freezeLevel = response.get(FREEZE_LEVEL).asDouble();
+        this.volumeMin = response.get(VOLUME_MIN).asDouble();
+        this.volumeStep = response.get(VOLUME_STEP).asDouble();
+        this.volumeMax = response.get(VOLUME_MAX).asDouble();
+        this.tradeContractSize = response.get(TRADE_CONTRACT_SIZE).asDouble();
+        this.tradeTickValue = response.get(TRADE_TICK_VALUE).asDouble();
+        this.tradeTickSize = response.get(TRADE_TICK_SIZE).asDouble();
+        this.tradeStopsLevel = response.get(TRADE_STOPS_LEVEL).asInt();
+        this.tradeFreezeLevel = response.get(TRADE_FREEZE_LEVEL).asInt();
+    }
+
+    /**
+     * Symbol name.
+     *
+     * @return the symbol name, eg. EURUSD
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * Point size in the quote currency.
+     *
+     * @return <code>SymbolInfoDouble(name, SYMBOL_POINT)</code>
+     */
+    public double getPoint() {
+        return point;
+    }
+
+    /**
+     * Digits after decimal point.
+     *
+     * @return <code>SymbolInfoInteger(name, SYMBOL_DIGITS)</code>
+     */
+    public int getDigits() {
+        return digits;
+    }
+
+    /**
+     * Minimal volume for a deal.
+     *
+     * @return <code>SymbolInfoDouble(name, SYMBOL_VOLUME_MIN)</code>
+     */
+    public double getVolumeMin() {
+        return volumeMin;
+    }
+
+    /**
+     * Minimal volume change step for deal execution
+     *
+     * @return <code>SymbolInfoDouble(name, SYMBOL_VOLUME_STEP)</code>
+     */
+    public double getVolumeStep() {
+        return volumeStep;
+    }
+
+    /**
+     * Maximal volume for a deal.
+     *
+     * @return <code>SymbolInfoDouble(name, SYMBOL_VOLUME_MAX)</code>
+     */
+    public double getVolumeMax() {
+        return volumeMax;
+    }
+
+    /**
+     * Trade contract size in the base currency.
+     *
+     * @return <code>SymbolInfoDouble(name, SYMBOL_TRADE_CONTRACT_SIZE)</code>
+     */
+    public double getTradeContractSize() {
+        return tradeContractSize;
+    }
+
+    /**
+     * Tick value in the deposit currency.
+     *
+     * @return <code>SymbolInfoDouble(name, SYMBOL_TRADE_TICK_VALUE)</code>
+     */
+    public double getTradeTickValue() {
+        return tradeTickValue;
+    }
+
+    /**
+     * Tick size in points.
+     *
+     * @return <code>SymbolInfoDouble(name, SYMBOL_TRADE_TICK_SIZE)</code>
+     */
+    public double getTradeTickSize() {
+        return tradeTickSize;
+    }
+
+    /**
+     * Stop level in points.
+     *
+     * @return <code>SymbolInfoInteger(name, SYMBOL_TRADE_STOPS_LEVEL)</code>
+     */
+    public int getTradeStopsLevel() {
+        return tradeStopsLevel;
+    }
+
+    /**
+     * Order freeze level in points.
+     *
+     * @return <code>SymbolInfoInteger(name, SYMBOL_TRADE_FREEZE_LEVEL)</code>
+     */
+    public int getTradeFreezeLevel() {
+        return tradeFreezeLevel;
     }
 
     /**
@@ -117,16 +172,16 @@ public class Symbol {
     public String toString() {
         return "Symbol{" +
                 "name='" + name + '\'' +
-                ", pointSize=" + pointSize +
+                ", point=" + point +
                 ", digits=" + digits +
-                ", lotSize=" + lotSize +
-                ", tickValue=" + tickValue +
-                ", tickSize=" + tickSize +
-                ", minLot=" + minLot +
-                ", lotStep=" + lotStep +
-                ", maxLot=" + maxLot +
-                ", stopLevel=" + stopLevel +
-                ", freezeLevel=" + freezeLevel +
+                ", volumeMin=" + volumeMin +
+                ", volumeStep=" + volumeStep +
+                ", volumeMax=" + volumeMax +
+                ", tradeContractSize=" + tradeContractSize +
+                ", tradeTickValue=" + tradeTickValue +
+                ", tradeTickSize=" + tradeTickSize +
+                ", tradeStopsLevel=" + tradeStopsLevel +
+                ", tradeFreezeLevel=" + tradeFreezeLevel +
                 '}';
     }
 }
