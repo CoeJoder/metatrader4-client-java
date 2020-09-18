@@ -1,7 +1,9 @@
 package human.coejoder.mt4client;
 
+import com.fasterxml.jackson.annotation.JacksonInject;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
 
 /**
  * A market symbol in MetaTrader 4.
@@ -10,9 +12,6 @@ import com.fasterxml.jackson.databind.JsonNode;
  */
 public class Symbol {
 
-    private static final String NAME = "name";
-    private static final String POINT = "point";
-    private static final String DIGITS = "digits";
     private static final String VOLUME_MIN = "volume_min";
     private static final String VOLUME_STEP = "volume_step";
     private static final String VOLUME_MAX = "volume_max";
@@ -39,22 +38,44 @@ public class Symbol {
     /**
      * Package-private constructor.
      *
-     * @param mt4      The {@link MT4Client} object.
-     * @param response The basic symbol info as returned by the server.
+     * @param mt4               The {@link MT4Client} object.
+     * @param name              Symbol name.
+     * @param point             Point size in the quote currency.
+     * @param digits            Digits after decimal point.
+     * @param volumeMin         Minimal volume for a deal.
+     * @param volumeStep        Minimal volume change step for deal execution
+     * @param volumeMax         Maximal volume for a deal.
+     * @param tradeContractSize Trade contract size in the base currency.
+     * @param tradeTickValue    Tick value in the deposit currency.
+     * @param tradeTickSize     Tick size in points.
+     * @param tradeStopsLevel   Stop level in points.
+     * @param tradeFreezeLevel  Order freeze level in points.
      */
-    Symbol(MT4Client mt4, JsonNode response) {
+    @JsonCreator
+    Symbol(@JacksonInject MT4Client mt4,
+           String name,
+           double point,
+           int digits,
+           @JsonProperty(VOLUME_MIN) double volumeMin,
+           @JsonProperty(VOLUME_STEP) double volumeStep,
+           @JsonProperty(VOLUME_MAX) double volumeMax,
+           @JsonProperty(TRADE_CONTRACT_SIZE) double tradeContractSize,
+           @JsonProperty(TRADE_TICK_VALUE) double tradeTickValue,
+           @JsonProperty(TRADE_TICK_SIZE) double tradeTickSize,
+           @JsonProperty(TRADE_STOPS_LEVEL) int tradeStopsLevel,
+           @JsonProperty(TRADE_FREEZE_LEVEL) int tradeFreezeLevel) {
         this.mt4 = mt4;
-        this.name = response.get(NAME).asText();
-        this.point = response.get(POINT).asDouble();
-        this.digits = response.get(DIGITS).asInt();
-        this.volumeMin = response.get(VOLUME_MIN).asDouble();
-        this.volumeStep = response.get(VOLUME_STEP).asDouble();
-        this.volumeMax = response.get(VOLUME_MAX).asDouble();
-        this.tradeContractSize = response.get(TRADE_CONTRACT_SIZE).asDouble();
-        this.tradeTickValue = response.get(TRADE_TICK_VALUE).asDouble();
-        this.tradeTickSize = response.get(TRADE_TICK_SIZE).asDouble();
-        this.tradeStopsLevel = response.get(TRADE_STOPS_LEVEL).asInt();
-        this.tradeFreezeLevel = response.get(TRADE_FREEZE_LEVEL).asInt();
+        this.name = name;
+        this.point = point;
+        this.digits = digits;
+        this.volumeMin = volumeMin;
+        this.volumeStep = volumeStep;
+        this.volumeMax = volumeMax;
+        this.tradeContractSize = tradeContractSize;
+        this.tradeTickValue = tradeTickValue;
+        this.tradeTickSize = tradeTickSize;
+        this.tradeStopsLevel = tradeStopsLevel;
+        this.tradeFreezeLevel = tradeFreezeLevel;
     }
 
     /**
@@ -164,8 +185,8 @@ public class Symbol {
      * @throws MT4Exception            If server had an error.
      */
     public SymbolTick getTick() throws JsonProcessingException, MT4Exception {
-        return new SymbolTick(mt4.getResponse(Request.GET_SYMBOL_TICK.build()
-                .put(SYMBOL, name)));
+        return mt4.getResponse(Request.GET_SYMBOL_TICK.build()
+                .put(SYMBOL, name), SymbolTick.class);
     }
 
     @Override

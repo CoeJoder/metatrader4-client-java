@@ -1,7 +1,9 @@
 package human.coejoder.mt4client;
 
+import com.fasterxml.jackson.annotation.JacksonInject;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
 
 /**
  * A MetaTrader 4 account.
@@ -9,40 +11,70 @@ import com.fasterxml.jackson.databind.JsonNode;
 public class Account {
 
     private static final String PROPERTY_ID = "property_id";
-    private static final String LOGIN = "login";
     private static final String TRADE_MODE = "trade_mode";
-    private static final String NAME = "name";
-    private static final String SERVER = "server";
-    private static final String CURRENCY = "currency";
-    private static final String COMPANY = "company";
 
     private final MT4Client mt4;
-    public final int login;
-    public final AccountTradeMode tradeMode;
-    public final String name;
-    public final String server;
-    public final String currency;
-    public final String company;
+    private final int login;
+    private final AccountTradeMode tradeMode;
+    private final String name;
+    private final String server;
+    private final String currency;
+    private final String company;
 
     /**
      * Package-private constructor.
      *
-     * @param mt4      The {@link MT4Client} object.
-     * @param response The basic account info as returned by the server.
+     * @param mt4       The {@link MT4Client} object.
+     * @param login     Account number.
+     * @param tradeMode Account trade mode.
+     * @param name      Client name.
+     * @param server    Trade server name.
+     * @param currency  Account currency.
+     * @param company   Name of a company which serves the account.
      */
-    Account(MT4Client mt4, JsonNode response) {
+    @JsonCreator
+    Account(@JacksonInject MT4Client mt4,
+            int login,
+            @JsonProperty(TRADE_MODE) int tradeMode,
+            String name,
+            String server,
+            String currency,
+            String company) {
         this.mt4 = mt4;
-        this.login = response.get(LOGIN).asInt();
-        this.tradeMode = AccountTradeMode.fromId(response.get(TRADE_MODE).asInt())
-                .orElseThrow();
-        this.name = response.get(NAME).asText();
-        this.server = response.get(SERVER).asText();
-        this.currency = response.get(CURRENCY).asText();
-        this.company = response.get(COMPANY).asText();
+        this.login = login;
+        this.tradeMode = AccountTradeMode.fromId(tradeMode).orElseThrow();
+        this.name = name;
+        this.server = server;
+        this.currency = currency;
+        this.company = company;
+    }
+
+    public int getLogin() {
+        return login;
+    }
+
+    public AccountTradeMode getTradeMode() {
+        return tradeMode;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getServer() {
+        return server;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public String getCompany() {
+        return company;
     }
 
     /**
-     * Get account leverage.
+     * Account leverage.
      *
      * @return The account leverage.
      * @throws JsonProcessingException If JSON response fails to parse.
@@ -200,14 +232,12 @@ public class Account {
 
     private int getAccountInfoInteger(AccountInfoInteger prop) throws JsonProcessingException, MT4Exception {
         return mt4.getResponse(Request.GET_ACCOUNT_INFO_INTEGER.build()
-                .put(PROPERTY_ID, prop.id))
-                .asInt();
+                .put(PROPERTY_ID, prop.id), Integer.class);
     }
 
     private double getAccountInfoDouble(AccountInfoDouble prop) throws JsonProcessingException, MT4Exception {
         return mt4.getResponse(Request.GET_ACCOUNT_INFO_DOUBLE.build()
-                .put(PROPERTY_ID, prop.id))
-                .asDouble();
+                .put(PROPERTY_ID, prop.id), Double.class);
     }
 
     @Override

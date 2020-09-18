@@ -2,9 +2,11 @@ package human.coejoder.mt4client;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.InjectableValues;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.zeromq.SocketType;
@@ -16,7 +18,6 @@ import java.util.List;
 public class MT4Client implements AutoCloseable {
 
     private static final Logger LOG = LoggerFactory.getLogger(MT4Client.class);
-    private static final ObjectMapper JSON_MAPPER = new ObjectMapper();
     private static final int ENABLED = 1;
     private static final int DEFAULT_REQUEST_TIMEOUT_MILLIS = 10000;
     private static final int DEFAULT_RESPONSE_TIMEOUT_MILLIS = 10000;
@@ -29,6 +30,7 @@ public class MT4Client implements AutoCloseable {
 
     private final ZContext context;
     private final ZMQ.Socket socket;
+    private final ObjectMapper objectMapper;
 
     /**
      * Constructor.  Initialize the REQ socket and connect to the MT4 server.
@@ -38,6 +40,14 @@ public class MT4Client implements AutoCloseable {
      * @param responseTimeoutMs The number of milliseconds to wait for a response to be received.
      */
     public MT4Client(String address, int requestTimeoutMs, int responseTimeoutMs) {
+        // create JSON object mapper
+        objectMapper = new ObjectMapper();
+        objectMapper.registerModule(new ParameterNamesModule());
+
+        InjectableValues.Std injectableValues = new InjectableValues.Std();
+        injectableValues.addValue(MT4Client.class, this);
+        objectMapper.setInjectableValues(injectableValues);
+
         // create and configure REQ socket
         this.context = new ZContext();
         this.socket = context.createSocket(SocketType.REQ);
@@ -77,7 +87,7 @@ public class MT4Client implements AutoCloseable {
      * @throws MT4Exception            If server had an error.
      */
     public Account getAccount() throws JsonProcessingException, MT4Exception {
-        return new Account(this, getResponse(Request.GET_ACCOUNT_INFO.build()));
+        return getResponse(Request.GET_ACCOUNT_INFO.build(), Account.class);
     }
 
     /**
@@ -88,22 +98,44 @@ public class MT4Client implements AutoCloseable {
      * @throws MT4Exception            If server had an error.
      */
     public List<String> getSymbolNames() throws JsonProcessingException, MT4Exception {
-        return JSON_MAPPER.convertValue(getResponse(Request.GET_SYMBOLS.build()), LIST_OF_STRINGS);
+        return getResponse(Request.GET_SYMBOLS.build(), LIST_OF_STRINGS);
     }
 
     /**
      * Send a request object to the server and wait for a response.
      *
-     * @param request The request to send.  Must have an `action` property.
+     * @param request      The request to send.  Must have an `action` property.
+     * @param responseType The response type.
+     * @param <T>          The response type.
      * @return The server response.
+     * @throws JsonProcessingException If JSON response fails to parse.
+     * @throws MT4Exception            If server had an error.
      */
-    JsonNode getResponse(ObjectNode request) throws JsonProcessingException, MT4Exception {
+    <T> T getResponse(ObjectNode request, Class<T> responseType) throws JsonProcessingException, MT4Exception {
+        return objectMapper.convertValue(getResponse(request), responseType);
+    }
+
+    /**
+     * Send a request object to the server and wait for a response.
+     *
+     * @param request      The request to send.  Must have an `action` property.
+     * @param responseType The response type.
+     * @param <T>          The response type.
+     * @return The server response.
+     * @throws JsonProcessingException If JSON response fails to parse.
+     * @throws MT4Exception            If server had an error.
+     */
+    <T> T getResponse(ObjectNode request, TypeReference<T> responseType) throws JsonProcessingException, MT4Exception {
+        return objectMapper.convertValue(getResponse(request), responseType);
+    }
+
+    private JsonNode getResponse(ObjectNode request) throws JsonProcessingException, MT4Exception {
         String strRequest = request.toString();
         socket.send(strRequest);
         LOG.trace("Request: " + strRequest);
         String strResponse = socket.recvStr();
         LOG.trace(strResponse == null ? "Response is empty." : "Response: " + strResponse);
-        JsonNode response = JSON_MAPPER.readTree(strResponse);
+        JsonNode response = objectMapper.readTree(strResponse);
 
         // throw exception for any errors
         JsonNode errorCode = response.get(ERROR_CODE);

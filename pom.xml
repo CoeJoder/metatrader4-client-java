@@ -25,6 +25,10 @@
                 <version>3.8.0</version>
                 <configuration>
                     <release>${jdk.version}</release>
+                    <compilerArgs>
+                        <!-- required for Jackson constructor-based deserialization sans annotations -->
+                        <arg>-parameters</arg>
+                    </compilerArgs>
                 </configuration>
             </plugin>
         </plugins>
@@ -49,6 +53,11 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
+            <version>${jackson-databind.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.module</groupId>
+            <artifactId>jackson-module-parameter-names</artifactId>
             <version>${jackson-databind.version}</version>
         </dependency>
         <dependency>
