@@ -51,4 +51,15 @@ public class SymbolTick {
         this.last = last;
         this.volume = volume;
     }
+
+    @Override
+    public String toString() {
+        return "SymbolTick{" +
+                "time=" + time +
+                ", bid=" + bid +
+                ", ask=" + ask +
+                ", last=" + last +
+                ", volume=" + volume +
+                '}';
+    }
 }

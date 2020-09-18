@@ -5,6 +5,8 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.InjectableValues;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
 import org.slf4j.Logger;
@@ -13,7 +15,10 @@ import org.zeromq.SocketType;
 import org.zeromq.ZContext;
 import org.zeromq.ZMQ;
 
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MT4Client implements AutoCloseable {
 
@@ -26,7 +31,9 @@ public class MT4Client implements AutoCloseable {
     private static final String ERROR_MESSAGE = "error_message";
     private static final String WARNING = "warning";
     private static final String RESPONSE = "response";
+    private static final String NAMES = "names";
     private static final TypeReference<List<String>> LIST_OF_STRINGS = new TypeReference<>() {};
+    private static final TypeReference<HashMap<String, Symbol>> MAP_OF_SYMBOLS = new TypeReference<>() {};
 
     private final ZContext context;
     private final ZMQ.Socket socket;
@@ -99,6 +106,36 @@ public class MT4Client implements AutoCloseable {
      */
     public List<String> getSymbolNames() throws JsonProcessingException, MT4Exception {
         return getResponse(Request.GET_SYMBOLS.build(), LIST_OF_STRINGS);
+    }
+
+    /**
+     * Get query interfaces for market symbols.
+     *
+     * @param names The names of the symbols.
+     * @return A name-to-{@link Symbol} map.
+     * @throws JsonProcessingException If JSON response fails to parse.
+     * @throws MT4Exception            If server had an error.
+     */
+    public Map<String, Symbol> getSymbols(String... names) throws JsonProcessingException, MT4Exception {
+        if (names.length == 0) {
+            return Collections.emptyMap();
+        }
+        ArrayNode namesArray = JsonNodeFactory.instance.arrayNode(names.length);
+        for (String name : names) {
+            namesArray.add(name);
+        }
+        return getResponse(Request.GET_SYMBOL_INFO.build()
+                .set(NAMES, namesArray), MAP_OF_SYMBOLS);
+    }
+
+    /**
+     * Get a query interface for a market symbol.
+     *
+     * @param name The name of the symbol.
+     * @return The {@link Symbol}.
+     */
+    public Symbol getSymbol(String name) throws JsonProcessingException, MT4Exception {
+        return getSymbols(name).get(name);
     }
 
     /**
