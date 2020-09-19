@@ -49,26 +49,56 @@ public class Account {
         this.company = company;
     }
 
+    /**
+     * Account number.
+     *
+     * @return <code>AccountInfoInteger(ACCOUNT_LOGIN)</code>
+     */
     public int getLogin() {
         return login;
     }
 
+    /**
+     * Account trade mode.
+     *
+     * @return <code>AccountInfoInteger(ACCOUNT_TRADE_MODE)</code>
+     */
     public AccountTradeMode getTradeMode() {
         return tradeMode;
     }
 
+    /**
+     * Client name.
+     *
+     * @return <code>AccountInfoString(ACCOUNT_NAME)</code>
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Trade server name.
+     *
+     * @return <code>AccountInfoString(ACCOUNT_SERVER)</code>
+     */
     public String getServer() {
         return server;
     }
 
+    /**
+     * Account currency.
+     *
+     * @return <code>AccountInfoString(ACCOUNT_CURRENCY)</code>
+     */
     public String getCurrency() {
         return currency;
     }
 
+    /**
+     * Name of a company which serves the account.
+     *
+     * @return <code>AccountInfoString(ACCOUNT_COMPANY)</code>
+     */
     public String getCompany() {
         return company;
     }
