@@ -21,6 +21,7 @@ public class Symbol {
     private static final String TRADE_STOPS_LEVEL = "trade_stops_level";
     private static final String TRADE_FREEZE_LEVEL = "trade_freeze_level";
     private static final String SYMBOL = "symbol";
+    private static final String PROPERTY_ID = "property_id";
 
     private final MT4Client mt4;
     private final String name;
@@ -187,6 +188,12 @@ public class Symbol {
     public SymbolTick getTick() throws JsonProcessingException, MT4Exception {
         return mt4.getResponse(Request.GET_SYMBOL_TICK.build()
                 .put(SYMBOL, name), SymbolTick.class);
+    }
+
+    private int getSymbolInfoInteger(SymbolInfoInteger prop) throws JsonProcessingException, MT4Exception {
+        return mt4.getResponse(Request.GET_SYMBOL_INFO_INTEGER.build()
+                .put(SYMBOL, name)
+                .put(PROPERTY_ID, prop.id), Integer.class);
     }
 
     @Override
