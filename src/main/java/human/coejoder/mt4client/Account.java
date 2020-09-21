@@ -14,7 +14,7 @@ public class Account {
     private static final String TRADE_MODE = "trade_mode";
 
     private final MT4Client mt4;
-    private final int login;
+    private final long login;
     private final AccountTradeMode tradeMode;
     private final String name;
     private final String server;
@@ -34,7 +34,7 @@ public class Account {
      */
     @JsonCreator
     Account(@JacksonInject MT4Client mt4,
-            int login,
+            long login,
             @JsonProperty(TRADE_MODE) int tradeMode,
             String name,
             String server,
@@ -54,7 +54,7 @@ public class Account {
      *
      * @return <code>AccountInfoInteger(ACCOUNT_LOGIN)</code>
      */
-    public int getLogin() {
+    public long getLogin() {
         return login;
     }
 
@@ -110,7 +110,7 @@ public class Account {
      * @throws JsonProcessingException If JSON response fails to parse.
      * @throws MT4Exception            If server had an error.
      */
-    public int getLeverage() throws JsonProcessingException, MT4Exception {
+    public long getLeverage() throws JsonProcessingException, MT4Exception {
         return getAccountInfoInteger(AccountInfoInteger.ACCOUNT_LEVERAGE);
     }
 
@@ -122,7 +122,7 @@ public class Account {
      * @throws MT4Exception            If server had an error.
      */
     public int getLimitOrders() throws JsonProcessingException, MT4Exception {
-        return getAccountInfoInteger(AccountInfoInteger.ACCOUNT_LIMIT_ORDERS);
+        return (int)getAccountInfoInteger(AccountInfoInteger.ACCOUNT_LIMIT_ORDERS);
     }
 
     /**
@@ -133,7 +133,7 @@ public class Account {
      * @throws MT4Exception            If server had an error.
      */
     public AccountStopoutMode getMarginStopOutMode() throws JsonProcessingException, MT4Exception {
-        return AccountStopoutMode.fromId(getAccountInfoInteger(AccountInfoInteger.ACCOUNT_MARGIN_SO_MODE))
+        return AccountStopoutMode.fromId((int)getAccountInfoInteger(AccountInfoInteger.ACCOUNT_MARGIN_SO_MODE))
                 .orElseThrow();
     }
 
@@ -145,7 +145,7 @@ public class Account {
      * @throws MT4Exception            If server had an error.
      */
     public boolean isTradeAllowed() throws JsonProcessingException, MT4Exception {
-        return getAccountInfoInteger(AccountInfoInteger.ACCOUNT_TRADE_ALLOWED) == 1;
+        return (int)getAccountInfoInteger(AccountInfoInteger.ACCOUNT_TRADE_ALLOWED) == 1;
     }
 
     /**
@@ -156,7 +156,7 @@ public class Account {
      * @throws MT4Exception            If server had an error.
      */
     public int isTradeForExpertAdvisorAllowed() throws JsonProcessingException, MT4Exception {
-        return getAccountInfoInteger(AccountInfoInteger.ACCOUNT_TRADE_EXPERT);
+        return (int)getAccountInfoInteger(AccountInfoInteger.ACCOUNT_TRADE_EXPERT);
     }
 
     /**
@@ -260,14 +260,14 @@ public class Account {
         return getAccountInfoDouble(AccountInfoDouble.ACCOUNT_MARGIN_SO_SO);
     }
 
-    private int getAccountInfoInteger(AccountInfoInteger prop) throws JsonProcessingException, MT4Exception {
+    private long getAccountInfoInteger(AccountInfoInteger prop) throws JsonProcessingException, MT4Exception {
         return mt4.getResponse(Request.GET_ACCOUNT_INFO_INTEGER.build()
-                .put(PROPERTY_ID, prop.id), Integer.class);
+                .put(PROPERTY_ID, prop.id), long.class);
     }
 
     private double getAccountInfoDouble(AccountInfoDouble prop) throws JsonProcessingException, MT4Exception {
         return mt4.getResponse(Request.GET_ACCOUNT_INFO_DOUBLE.build()
-                .put(PROPERTY_ID, prop.id), Double.class);
+                .put(PROPERTY_ID, prop.id), double.class);
     }
 
     @Override
