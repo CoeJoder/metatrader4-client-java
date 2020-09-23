@@ -242,7 +242,7 @@ public class Symbol {
      * @throws MT4Exception            If server had an error.
      */
     public int spread() throws JsonProcessingException, MT4Exception {
-        return (int)getSymbolInfoInteger(SymbolInfoInteger.SYMBOL_SPREAD);
+        return (int) getSymbolInfoInteger(SymbolInfoInteger.SYMBOL_SPREAD);
     }
 
     /**
@@ -253,7 +253,7 @@ public class Symbol {
      * @throws MT4Exception            If server had an error.
      */
     public SymbolCalcMode getTradeCalcMode() throws JsonProcessingException, MT4Exception {
-        return SymbolCalcMode.fromId((int)getSymbolInfoInteger(SymbolInfoInteger.SYMBOL_TRADE_CALC_MODE))
+        return SymbolCalcMode.fromId((int) getSymbolInfoInteger(SymbolInfoInteger.SYMBOL_TRADE_CALC_MODE))
                 .orElseThrow();
     }
 
@@ -265,7 +265,7 @@ public class Symbol {
      * @throws MT4Exception            If server had an error.
      */
     public SymbolTradeMode getTradeMode() throws JsonProcessingException, MT4Exception {
-        return SymbolTradeMode.fromId((int)getSymbolInfoInteger(SymbolInfoInteger.SYMBOL_TRADE_MODE))
+        return SymbolTradeMode.fromId((int) getSymbolInfoInteger(SymbolInfoInteger.SYMBOL_TRADE_MODE))
                 .orElseThrow();
     }
 
@@ -289,6 +289,42 @@ public class Symbol {
      */
     public long getExpirationTime() throws JsonProcessingException, MT4Exception {
         return getSymbolInfoInteger(SymbolInfoInteger.SYMBOL_EXPIRATION_TIME);
+    }
+
+    /**
+     * Deal execution mode.
+     *
+     * @return <code>SymbolInfoInteger(:symbol, SYMBOL_TRADE_EXEMODE)</code>
+     * @throws JsonProcessingException If JSON response fails to parse.
+     * @throws MT4Exception            If server had an error.
+     */
+    public SymbolTradeExecution getTradeExecutionMode() throws JsonProcessingException, MT4Exception {
+        return SymbolTradeExecution.fromId((int) getSymbolInfoInteger(SymbolInfoInteger.SYMBOL_TRADE_EXEMODE))
+                .orElseThrow();
+    }
+
+    /**
+     * Swap calculation model.
+     *
+     * @return <code>SymbolInfoInteger(:symbol, SYMBOL_SWAP_MODE)</code>
+     * @throws JsonProcessingException If JSON response fails to parse.
+     * @throws MT4Exception            If server had an error.
+     */
+    public SymbolSwapMode getSwapMode() throws JsonProcessingException, MT4Exception {
+        return SymbolSwapMode.fromId((int) getSymbolInfoInteger(SymbolInfoInteger.SYMBOL_SWAP_MODE))
+                .orElseThrow();
+    }
+
+    /**
+     * Day of week to charge 3 days swap rollover.
+     *
+     * @return <code>SymbolInfoInteger(:symbol, SYMBOL_SWAP_ROLLOVER3DAYS)</code>
+     * @throws JsonProcessingException If JSON response fails to parse.
+     * @throws MT4Exception            If server had an error.
+     */
+    public DayOfWeek getSwapRollover3Days() throws JsonProcessingException, MT4Exception {
+        return DayOfWeek.fromId((int) getSymbolInfoInteger(SymbolInfoInteger.SYMBOL_SWAP_ROLLOVER3DAYS))
+                .orElseThrow();
     }
 
     private boolean getSymbolInfoBoolean(SymbolInfoInteger prop) throws JsonProcessingException, MT4Exception {
