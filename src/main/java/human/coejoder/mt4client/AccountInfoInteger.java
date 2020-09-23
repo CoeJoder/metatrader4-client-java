@@ -5,7 +5,6 @@ package human.coejoder.mt4client;
  *
  * @see <a href="https://docs.mql4.com/constants/environment_state/accountinformation#enum_account_info_integer">ENUM_ACCOUNT_INFO_INTEGER</a>
  */
-@SuppressWarnings("unused")
 public enum AccountInfoInteger {
     ACCOUNT_LOGIN(0),
     ACCOUNT_TRADE_MODE(32),

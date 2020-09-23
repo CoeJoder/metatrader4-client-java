@@ -14,7 +14,6 @@ import static java.util.stream.Collectors.toMap;
  * @see <a href="https://www.mql5.com/en/docs/constants/environment_state/marketinfoconstants#enum_symbol_calc_mode">ENUM_SYMBOL_CALC_MODE (mql5)</a>
  * @see <a href="https://docs.mql4.com/convert/stringformat">Example usage (mql4)</a>
  */
-@SuppressWarnings("unused")
 public enum SymbolCalcMode {
     SYMBOL_CALC_MODE_FOREX(0),
     SYMBOL_CALC_MODE_CFD(1),

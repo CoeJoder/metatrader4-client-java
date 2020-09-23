@@ -327,18 +327,91 @@ public class Symbol {
                 .orElseThrow();
     }
 
+    /**
+     * Bid - best sell offer.
+     *
+     * @return <code>SymbolInfoDouble(:symbol, SYMBOL_BID)</code>
+     * @throws JsonProcessingException If JSON response fails to parse.
+     * @throws MT4Exception            If server had an error.
+     */
+    public double getBid() throws JsonProcessingException, MT4Exception {
+        return getSymbolInfoDouble(SymbolInfoDouble.SYMBOL_BID);
+    }
+
+    /**
+     * Ask - best buy offer.
+     *
+     * @return <code>SymbolInfoDouble(:symbol, SYMBOL_ASK)</code>
+     * @throws JsonProcessingException If JSON response fails to parse.
+     * @throws MT4Exception            If server had an error.
+     */
+    public double getAsk() throws JsonProcessingException, MT4Exception {
+        return getSymbolInfoDouble(SymbolInfoDouble.SYMBOL_ASK);
+    }
+
+    /**
+     * Buy order swap value.
+     *
+     * @return <code>SymbolInfoDouble(:symbol, SYMBOL_SWAP_LONG)</code>
+     * @throws JsonProcessingException If JSON response fails to parse.
+     * @throws MT4Exception            If server had an error.
+     */
+    public double getSwapLong() throws JsonProcessingException, MT4Exception {
+        return getSymbolInfoDouble(SymbolInfoDouble.SYMBOL_SWAP_LONG);
+    }
+
+    /**
+     * Sell order swap value.
+     *
+     * @return <code>SymbolInfoDouble(:symbol, SYMBOL_SWAP_SHORT)</code>
+     * @throws JsonProcessingException If JSON response fails to parse.
+     * @throws MT4Exception            If server had an error.
+     */
+    public double getSwapShort() throws JsonProcessingException, MT4Exception {
+        return getSymbolInfoDouble(SymbolInfoDouble.SYMBOL_SWAP_SHORT);
+    }
+
+    /**
+     * Initial margin means the amount in the margin currency required for opening an order with the volume of one lot.
+     * It is used for checking a client's assets when he or she enters the market.
+     *
+     * @return <code>SymbolInfoDouble(:symbol, SYMBOL_MARGIN_INITIAL)</code>
+     * @throws JsonProcessingException If JSON response fails to parse.
+     * @throws MT4Exception            If server had an error.
+     */
+    public double getMarginInitial() throws JsonProcessingException, MT4Exception {
+        return getSymbolInfoDouble(SymbolInfoDouble.SYMBOL_MARGIN_INITIAL);
+    }
+
+    /**
+     * The maintenance margin. If it is set, it sets the margin amount in the margin currency of the symbol, charged
+     * from one lot. It is used for checking a client's assets when his/her account state changes. If the maintenance
+     * margin is equal to 0, the initial margin is used.
+     *
+     * @return <code>SymbolInfoDouble(:symbol, SYMBOL_MARGIN_MAINTENANCE)</code>
+     * @throws JsonProcessingException If JSON response fails to parse.
+     * @throws MT4Exception            If server had an error.
+     */
+    public double getMarginMaintenance() throws JsonProcessingException, MT4Exception {
+        return getSymbolInfoDouble(SymbolInfoDouble.SYMBOL_MARGIN_MAINTENANCE);
+    }
+
     private boolean getSymbolInfoBoolean(SymbolInfoInteger prop) throws JsonProcessingException, MT4Exception {
-        return getSymbolInfo(prop, boolean.class);
+        return getSymbolInfo(Request.GET_SYMBOL_INFO_INTEGER, prop.id, boolean.class);
     }
 
     private long getSymbolInfoInteger(SymbolInfoInteger prop) throws JsonProcessingException, MT4Exception {
-        return getSymbolInfo(prop, long.class);
+        return getSymbolInfo(Request.GET_SYMBOL_INFO_INTEGER, prop.id, long.class);
     }
 
-    private <T> T getSymbolInfo(SymbolInfoInteger prop, Class<T> responseType) throws JsonProcessingException, MT4Exception {
-        return mt4.getResponse(Request.GET_SYMBOL_INFO_INTEGER.build()
+    private double getSymbolInfoDouble(SymbolInfoDouble prop) throws JsonProcessingException, MT4Exception {
+        return getSymbolInfo(Request.GET_SYMBOL_INFO_DOUBLE, prop.id, double.class);
+    }
+
+    private <T> T getSymbolInfo(Request request, int propId, Class<T> responseType) throws JsonProcessingException, MT4Exception {
+        return mt4.getResponse(request.build()
                 .put(SYMBOL, name)
-                .put(PROPERTY_ID, prop.id), responseType);
+                .put(PROPERTY_ID, propId), responseType);
     }
 
     @Override

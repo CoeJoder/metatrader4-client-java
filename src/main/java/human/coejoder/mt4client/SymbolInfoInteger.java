@@ -5,7 +5,6 @@ package human.coejoder.mt4client;
  *
  * @see <a href="https://docs.mql4.com/constants/environment_state/marketinfoconstants#enum_symbol_info_integer">ENUM_SYMBOL_INFO_INTEGER</a>
  */
-@SuppressWarnings("unused")
 public enum SymbolInfoInteger {
     SYMBOL_SELECT(0),
     SYMBOL_VISIBLE(76),

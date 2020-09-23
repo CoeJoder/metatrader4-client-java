@@ -11,7 +11,6 @@ import static java.util.stream.Collectors.toMap;
  *
  * @see <a href="https://docs.mql4.com/constants/environment_state/marketinfoconstants#enum_symbol_trade_mode">ENUM_SYMBOL_TRADE_MODE</a>
  */
-@SuppressWarnings("unused")
 public enum SymbolTradeMode {
     SYMBOL_TRADE_MODE_DISABLED(0),
     SYMBOL_TRADE_MODE_LONGONLY(3),          // MQL5 only

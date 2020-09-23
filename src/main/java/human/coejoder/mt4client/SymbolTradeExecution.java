@@ -11,7 +11,6 @@ import static java.util.stream.Collectors.toMap;
  *
  * @see <a href="https://docs.mql4.com/constants/environment_state/marketinfoconstants#enum_symbol_trade_execution">ENUM_SYMBOL_TRADE_EXECUTION</a>
  */
-@SuppressWarnings("unused")
 public enum SymbolTradeExecution {
     SYMBOL_TRADE_EXECUTION_REQUEST(0),
     SYMBOL_TRADE_EXECUTION_INSTANT(1),

@@ -14,7 +14,6 @@ import static java.util.stream.Collectors.toMap;
  * @see <a href="https://www.mql5.com/en/docs/constants/environment_state/marketinfoconstants#enum_symbol_swap_mode">ENUM_SYMBOL_SWAP_MODE</a>
  * @see <a href="https://docs.mql4.com/convert/stringformat">example usage</a>
  */
-@SuppressWarnings("unused")
 public enum SymbolSwapMode {
     SYMBOL_SWAP_MODE_POINTS(0),
     SYMBOL_SWAP_MODE_CURRENCY_SYMBOL(1),

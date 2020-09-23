@@ -11,7 +11,6 @@ import static java.util.stream.Collectors.toMap;
  *
  * @see <a href="https://docs.mql4.com/constants/environment_state/marketinfoconstants#enum_day_of_week">ENUM_DAY_OF_WEEK</a>
  */
-@SuppressWarnings("unused")
 public enum DayOfWeek {
     SUNDAY(0),
     MONDAY(1),
