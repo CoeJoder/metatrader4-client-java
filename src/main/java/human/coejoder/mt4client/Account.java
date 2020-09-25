@@ -106,7 +106,7 @@ public class Account {
     /**
      * Account leverage.
      *
-     * @return The account leverage.
+     * @return <code>AccountInfoString(ACCOUNT_LEVERAGE)</code>
      * @throws JsonProcessingException If JSON response fails to parse.
      * @throws MT4Exception            If server had an error.
      */
@@ -117,52 +117,52 @@ public class Account {
     /**
      * Maximum allowed number of open positions and active pending orders (in total), 0 = unlimited.
      *
-     * @return The limit order.
+     * @return <code>AccountInfoString(ACCOUNT_LIMIT_ORDERS)</code>
      * @throws JsonProcessingException If JSON response fails to parse.
      * @throws MT4Exception            If server had an error.
      */
     public int getLimitOrders() throws JsonProcessingException, MT4Exception {
-        return (int)getAccountInfoInteger(AccountInfoInteger.ACCOUNT_LIMIT_ORDERS);
+        return (int) getAccountInfoInteger(AccountInfoInteger.ACCOUNT_LIMIT_ORDERS);
     }
 
     /**
      * Mode for setting the minimal allowed margin.
      *
-     * @return The mode setting.
+     * @return <code>AccountInfoString(ACCOUNT_MARGIN_SO_MODE)</code>
      * @throws JsonProcessingException If JSON response fails to parse.
      * @throws MT4Exception            If server had an error.
      */
     public AccountStopoutMode getMarginStopOutMode() throws JsonProcessingException, MT4Exception {
-        return AccountStopoutMode.fromId((int)getAccountInfoInteger(AccountInfoInteger.ACCOUNT_MARGIN_SO_MODE))
+        return AccountStopoutMode.fromId((int) getAccountInfoInteger(AccountInfoInteger.ACCOUNT_MARGIN_SO_MODE))
                 .orElseThrow();
     }
 
     /**
      * Allowed trade for the current account.
      *
-     * @return Whether trading is allowed.
+     * @return <code>AccountInfoString(ACCOUNT_TRADE_ALLOWED)</code>
      * @throws JsonProcessingException If JSON response fails to parse.
      * @throws MT4Exception            If server had an error.
      */
     public boolean isTradeAllowed() throws JsonProcessingException, MT4Exception {
-        return (int)getAccountInfoInteger(AccountInfoInteger.ACCOUNT_TRADE_ALLOWED) == 1;
+        return (int) getAccountInfoInteger(AccountInfoInteger.ACCOUNT_TRADE_ALLOWED) == 1;
     }
 
     /**
      * Allowed trade for an Expert Advisor.
      *
-     * @return Whether trading via an Expert Advisor is allowed.
+     * @return <code>AccountInfoString(ACCOUNT_TRADE_EXPERT)</code>
      * @throws JsonProcessingException If JSON response fails to parse.
      * @throws MT4Exception            If server had an error.
      */
     public int isTradeForExpertAdvisorAllowed() throws JsonProcessingException, MT4Exception {
-        return (int)getAccountInfoInteger(AccountInfoInteger.ACCOUNT_TRADE_EXPERT);
+        return (int) getAccountInfoInteger(AccountInfoInteger.ACCOUNT_TRADE_EXPERT);
     }
 
     /**
      * Account balance in the deposit currency.
      *
-     * @return The account balance.
+     * @return <code>AccountInfoString(ACCOUNT_BALANCE)</code>
      * @throws JsonProcessingException If JSON response fails to parse.
      * @throws MT4Exception            If server had an error.
      */
@@ -173,7 +173,7 @@ public class Account {
     /**
      * Account credit in the deposit currency.
      *
-     * @return The account credit.
+     * @return <code>AccountInfoString(ACCOUNT_CREDIT)</code>
      * @throws JsonProcessingException If JSON response fails to parse.
      * @throws MT4Exception            If server had an error.
      */
@@ -184,7 +184,7 @@ public class Account {
     /**
      * Current profit of an account in the deposit currency.
      *
-     * @return The current profit.
+     * @return <code>AccountInfoString(ACCOUNT_PROFIT)</code>
      * @throws JsonProcessingException If JSON response fails to parse.
      * @throws MT4Exception            If server had an error.
      */
@@ -195,7 +195,7 @@ public class Account {
     /**
      * Account equity in the deposit currency.
      *
-     * @return The account equity.
+     * @return <code>AccountInfoString(ACCOUNT_EQUITY)</code>
      * @throws JsonProcessingException If JSON response fails to parse.
      * @throws MT4Exception            If server had an error.
      */
@@ -206,7 +206,7 @@ public class Account {
     /**
      * Account margin used in the deposit currency.
      *
-     * @return The account margin.
+     * @return <code>AccountInfoString(ACCOUNT_MARGIN)</code>
      * @throws JsonProcessingException If JSON response fails to parse.
      * @throws MT4Exception            If server had an error.
      */
@@ -217,7 +217,7 @@ public class Account {
     /**
      * Free margin of an account in the deposit currency.
      *
-     * @return The account's free margin.
+     * @return <code>AccountInfoString(ACCOUNT_MARGIN_FREE)</code>
      * @throws JsonProcessingException If JSON response fails to parse.
      * @throws MT4Exception            If server had an error.
      */
@@ -228,7 +228,7 @@ public class Account {
     /**
      * Account margin level in percents.
      *
-     * @return The account's margin level.
+     * @return <code>AccountInfoString(ACCOUNT_MARGIN_LEVEL)</code>
      * @throws JsonProcessingException If JSON response fails to parse.
      * @throws MT4Exception            If server had an error.
      */
@@ -240,7 +240,7 @@ public class Account {
      * Margin call level. Depending on {@link #getMarginStopOutMode() margin stop-out mode}, this is expressed in
      * percents or in the deposit currency.
      *
-     * @return The margin call level.
+     * @return <code>AccountInfoString(ACCOUNT_MARGIN_SO_CALL)</code>
      * @throws JsonProcessingException If JSON response fails to parse.
      * @throws MT4Exception            If server had an error.
      */
@@ -252,7 +252,7 @@ public class Account {
      * Margin stop-out level. Depending on the {@link #getMarginStopOutMode() margin stop-out mode}, this is expressed
      * in percents or in the deposit currency.
      *
-     * @return The margin stop-out level.
+     * @return <code>AccountInfoString(ACCOUNT_MARGIN_SO_SO)</code>
      * @throws JsonProcessingException If JSON response fails to parse.
      * @throws MT4Exception            If server had an error.
      */
