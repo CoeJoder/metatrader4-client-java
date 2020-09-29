@@ -21,17 +21,17 @@ public class Order {
     private final int magicNumber;
     private final String symbol;
     private final OrderType orderType;
-    private final float lots;
-    private final float openPrice;
-    private final float closePrice;
+    private final double lots;
+    private final double openPrice;
+    private final double closePrice;
     private final String openTime;
     private final String closeTime;
     private final String expiration;
-    private final float sl;
-    private final float tp;
-    private final float profit;
-    private final float commission;
-    private final float swap;
+    private final double sl;
+    private final double tp;
+    private final double profit;
+    private final double commission;
+    private final double swap;
     private final String comment;
 
     /**
@@ -60,17 +60,17 @@ public class Order {
                  @JsonProperty(MAGIC_NUMBER) int magicNumber,
                  String symbol,
                  @JsonProperty(ORDER_TYPE) int orderType,
-                 float lots,
-                 @JsonProperty(OPEN_PRICE) float openPrice,
-                 @JsonProperty(CLOSE_PRICE) float closePrice,
+                 double lots,
+                 @JsonProperty(OPEN_PRICE) double openPrice,
+                 @JsonProperty(CLOSE_PRICE) double closePrice,
                  @JsonProperty(OPEN_TIME) String openTime,
                  @JsonProperty(CLOSE_TIME) String closeTime,
                  String expiration,
-                 float sl,
-                 float tp,
-                 float profit,
-                 float commission,
-                 float swap,
+                 double sl,
+                 double tp,
+                 double profit,
+                 double commission,
+                 double swap,
                  String comment) {
         this.ticket = ticket;
         this.magicNumber = magicNumber;
@@ -106,15 +106,15 @@ public class Order {
         return orderType;
     }
 
-    public float getLots() {
+    public double getLots() {
         return lots;
     }
 
-    public float getOpenPrice() {
+    public double getOpenPrice() {
         return openPrice;
     }
 
-    public float getClosePrice() {
+    public double getClosePrice() {
         return closePrice;
     }
 
@@ -130,23 +130,23 @@ public class Order {
         return expiration;
     }
 
-    public float getSl() {
+    public double getSl() {
         return sl;
     }
 
-    public float getTp() {
+    public double getTp() {
         return tp;
     }
 
-    public float getProfit() {
+    public double getProfit() {
         return profit;
     }
 
-    public float getCommission() {
+    public double getCommission() {
         return commission;
     }
 
-    public float getSwap() {
+    public double getSwap() {
         return swap;
     }
 
