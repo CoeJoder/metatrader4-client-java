@@ -139,6 +139,17 @@ public class MT4Client implements AutoCloseable {
     }
 
     /**
+     * Get the names of all trading signals.
+     *
+     * @return A list of names of the available signals.
+     * @throws JsonProcessingException If JSON response fails to parse.
+     * @throws MT4Exception            If server had an error.
+     */
+    public List<String> getSignalNames() throws JsonProcessingException, MT4Exception {
+        return getResponse(Request.GET_SIGNALS.build(), LIST_OF_STRINGS);
+    }
+
+    /**
      * Send a request object to the server and wait for a response.
      *
      * @param request      The request to send.  Must have an `action` property.
