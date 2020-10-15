@@ -90,66 +90,147 @@ public class Order {
         this.comment = comment;
     }
 
+    /**
+     * The order ticket number.
+     *
+     * @return <code>OrderTicket()</code>
+     */
     public int getTicket() {
         return ticket;
     }
 
+    /**
+     * The identifying (magic) number.
+     *
+     * @return <code>OrderMagicNumber()</code>
+     */
     public int getMagicNumber() {
         return magicNumber;
     }
 
+    /**
+     * The symbol name.
+     *
+     * @return <code>OrderSymbol()</code>
+     */
     public String getSymbol() {
         return symbol;
     }
 
+    /**
+     * The order type.
+     *
+     * @return <code>OrderType()</code>
+     */
     public OrderType getOrderType() {
         return orderType;
     }
 
+    /**
+     * Amount of lots (trade volume).
+     *
+     * @return <code>OrderLots()</code>
+     */
     public double getLots() {
         return lots;
     }
 
+    /**
+     * The open price.
+     *
+     * @return <code>OrderOpenPrice()</code>
+     */
     public double getOpenPrice() {
         return openPrice;
     }
 
+    /**
+     * The close price.
+     *
+     * @return <code>OrderClosePrice()</code>
+     */
     public double getClosePrice() {
         return closePrice;
     }
 
+    /**
+     * The open date/time.
+     *
+     * @return <code>TimeToStr(OrderOpenTime(), TIME_DATE|TIME_SECONDS)</code>
+     */
     public String getOpenTime() {
         return openTime;
     }
 
+    /**
+     * The close date/time.
+     *
+     * @return <code>TimeToStr(OrderCloseTime(), TIME_DATE|TIME_SECONDS)</code>
+     */
     public String getCloseTime() {
         return closeTime;
     }
 
+    /**
+     * The expiration date/time.
+     *
+     * @return <code>TimeToStr(OrderExpiration(), TIME_DATE|TIME_SECONDS)</code>
+     */
     public String getExpiration() {
         return expiration;
     }
 
+    /**
+     * The stop-loss.
+     *
+     * @return <code>OrderStopLoss()</code>
+     */
     public double getSl() {
         return sl;
     }
 
+    /**
+     * The take-profit.
+     *
+     * @return <code>OrderTakeProfit()</code>
+     */
     public double getTp() {
         return tp;
     }
 
+    /**
+     * The net profit (without swaps or commissions). For open orders, it is the current unrealized profit. For closed
+     * orders, it is the fixed profit.
+     *
+     * @return <code>OrderProfit()</code>
+     */
     public double getProfit() {
         return profit;
     }
 
+    /**
+     * The calculated commission.
+     *
+     * @return <code>OrderCommission()</code>
+     */
     public double getCommission() {
         return commission;
     }
 
+    /**
+     * The swap value.
+     *
+     * @return <code>OrderSwap()</code>
+     */
     public double getSwap() {
         return swap;
     }
 
+    /**
+     * The comment.
+     *
+     * @return <code>OrderComment()</code>
+     */
     public String getComment() {
         return comment;
     }
