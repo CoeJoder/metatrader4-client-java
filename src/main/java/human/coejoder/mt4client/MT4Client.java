@@ -34,6 +34,7 @@ public class MT4Client implements AutoCloseable {
     private static final String NAMES = "names";
     private static final TypeReference<List<String>> LIST_OF_STRINGS = new TypeReference<>() {};
     private static final TypeReference<HashMap<String, Symbol>> MAP_OF_SYMBOLS = new TypeReference<>() {};
+    private static final TypeReference<HashMap<String, Signal>> MAP_OF_SIGNALS = new TypeReference<>() {};
 
     private final ZContext context;
     private final ZMQ.Socket socket;
@@ -147,6 +148,38 @@ public class MT4Client implements AutoCloseable {
      */
     public List<String> getSignalNames() throws JsonProcessingException, MT4Exception {
         return getResponse(Request.GET_SIGNALS.build(), LIST_OF_STRINGS);
+    }
+
+    /**
+     * Get data for multiple trading signals.
+     *
+     * @param names The names of the signals.
+     * @return A name-to-{@link Signal} map.
+     * @throws JsonProcessingException If JSON response fails to parse.
+     * @throws MT4Exception            If server had an error.
+     */
+    public Map<String, Signal> getSignals(String... names) throws JsonProcessingException, MT4Exception {
+        if (names.length == 0) {
+            return Collections.emptyMap();
+        }
+        ArrayNode namesArray = JsonNodeFactory.instance.arrayNode(names.length);
+        for (String name : names) {
+            namesArray.add(name);
+        }
+        return getResponse(Request.GET_SIGNAL_INFO.build()
+                .set(NAMES, namesArray), MAP_OF_SIGNALS);
+    }
+
+    /**
+     * Get data for a trading signal.
+     *
+     * @param name The name of the signal.
+     * @return The signal object.
+     * @throws JsonProcessingException If JSON response fails to parse.
+     * @throws MT4Exception            If server had an error.
+     */
+    public Signal getSignal(String name) throws JsonProcessingException, MT4Exception {
+        return getSignals(name).get(name);
     }
 
     /**
