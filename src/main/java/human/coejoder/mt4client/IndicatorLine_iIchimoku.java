@@ -10,7 +10,7 @@ public enum IndicatorLine_iIchimoku {
     SENKOUSPANB(4),
     CHIKOUSPAN(5);
 
-    private final int id;
+    public final int id;
 
     IndicatorLine_iIchimoku(int id) {
         this.id = id;

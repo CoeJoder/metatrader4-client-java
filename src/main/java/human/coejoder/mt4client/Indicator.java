@@ -40,7 +40,7 @@ public class Indicator {
      *
      * @param symbol    Symbol name on the data of which the indicator will be calculated. NULL means the current
      *                  symbol.
-     * @param timeframe Timeframe. It can be any {@link StandardTimeframe}. 0 means the current chart timeframe.
+     * @param timeframe Timeframe. It can be any {@link StandardTimeframe}.
      * @param shift     Index of the value taken from the indicator buffer (shift relative to the current bar the given
      *                  amount of periods ago).
      * @return Numerical value of the Bill Williams' Accelerator/Decelerator oscillator.
@@ -58,7 +58,7 @@ public class Indicator {
      *
      * @param symbol    Symbol name on the data of which the indicator will be calculated. NULL means the current
      *                  symbol.
-     * @param timeframe Timeframe. It can be any {@link StandardTimeframe}. 0 means the current chart timeframe.
+     * @param timeframe Timeframe. It can be any {@link StandardTimeframe}.
      * @param shift     Index of the value taken from the indicator buffer (shift relative to the current bar the given
      *                  amount of periods ago).
      * @return Numerical value of the Accumulation/Distribution indicator.
@@ -76,7 +76,7 @@ public class Indicator {
      *
      * @param symbol        Symbol name on the data of which the indicator will be calculated. NULL means the current
      *                      symbol.
-     * @param timeframe     Timeframe. It can be any {@link StandardTimeframe}. 0 means the current chart timeframe.
+     * @param timeframe     Timeframe. It can be any {@link StandardTimeframe}.
      * @param period        Averaging period for calculation.
      * @param applied_price Applied price. It can be any {@link AppliedPrice}.
      * @param mode          Indicator line index. It can be any {@link IndicatorLine_iADX}.
@@ -100,7 +100,7 @@ public class Indicator {
      *
      * @param symbol       Symbol name on the data of which the indicator will be calculated. NULL means the current
      *                     symbol.
-     * @param timeframe    Timeframe. It can be any {@link StandardTimeframe}. 0 means the current chart timeframe.
+     * @param timeframe    Timeframe. It can be any {@link StandardTimeframe}.
      * @param jawPeriod    Blue line averaging period (Alligator's Jaw).
      * @param jawShift     Blue line shift relative to the chart.
      * @param teethPeriod  Red line averaging period (Alligator's Teeth).
@@ -114,7 +114,7 @@ public class Indicator {
      * @param shift        Index of the value taken from the indicator buffer (shift relative to the current bar the
      *                     given amount of periods ago).
      * @return Numerical value of the Alligator indicator.
-     * <a href="https://docs.mql4.com/indicators/ialligator">https://docs.mql4.com/indicators/ialligator</a>
+     * @see <a href="https://docs.mql4.com/indicators/ialligator">https://docs.mql4.com/indicators/ialligator</a>
      */
     public static Indicator iAlligator(String symbol, Timeframe timeframe, long jawPeriod, long jawShift, long teethPeriod, long teethShift, long lipsPeriod, long lipsShift, SmoothingMethod maMethod, AppliedPrice appliedPrice, IndicatorLine_iAlligator mode, long shift) {
         return new Indicator(iAlligator, JsonNodeFactory.instance.arrayNode(12)
@@ -137,11 +137,11 @@ public class Indicator {
      *
      * @param symbol    Symbol name on the data of which the indicator will be calculated. NULL means the current
      *                  symbol.
-     * @param timeframe Timeframe. It can be any {@link StandardTimeframe}. 0 means the current chart timeframe.
+     * @param timeframe Timeframe. It can be any {@link StandardTimeframe}.
      * @param shift     Index of the value taken from the indicator buffer (shift relative to the current bar the given
      *                  amount of periods ago).
      * @return Numerical value of the Awesome oscillator indicator.
-     * <a href="https://docs.mql4.com/indicators/iao">https://docs.mql4.com/indicators/iao</a>
+     * @see <a href="https://docs.mql4.com/indicators/iao">https://docs.mql4.com/indicators/iao</a>
      */
     public static Indicator iAO(String symbol, Timeframe timeframe, long shift) {
         return new Indicator(iAO, JsonNodeFactory.instance.arrayNode(3)
@@ -155,12 +155,12 @@ public class Indicator {
      *
      * @param symbol    Symbol name on the data of which the indicator will be calculated. NULL means the current
      *                  symbol.
-     * @param timeframe Timeframe. It can be any {@link StandardTimeframe}. 0 means the current chart timeframe.
+     * @param timeframe Timeframe. It can be any {@link StandardTimeframe}.
      * @param period    Averaging period.
      * @param shift     Index of the value taken from the indicator buffer (shift relative to the current bar the given
      *                  amount of periods ago).
      * @return Numerical value of the Average True Range indicator.
-     * <a href="https://docs.mql4.com/indicators/iatr">https://docs.mql4.com/indicators/iatr</a>
+     * @see <a href="https://docs.mql4.com/indicators/iatr">https://docs.mql4.com/indicators/iatr</a>
      */
     public static Indicator iATR(String symbol, Timeframe timeframe, long period, long shift) {
         return new Indicator(iATR, JsonNodeFactory.instance.arrayNode(4)
@@ -176,13 +176,13 @@ public class Indicator {
      *
      * @param symbol       Symbol name on the data of which the indicator will be calculated. NULL means the current
      *                     symbol.
-     * @param timeframe    Timeframe. It can be any {@link StandardTimeframe}. 0 means the current chart timeframe.
+     * @param timeframe    Timeframe. It can be any {@link StandardTimeframe}.
      * @param period       Averaging period.
      * @param appliedPrice Applied price. It can be any {@link AppliedPrice}.
      * @param shift        Index of the value taken from the indicator buffer (shift relative to the current bar the
      *                     given amount of periods ago).
      * @return Numerical value of the Bears Power indicator.
-     * <a href="https://docs.mql4.com/indicators/ibearspower">https://docs.mql4.com/indicators/ibearspower</a>
+     * @see <a href="https://docs.mql4.com/indicators/ibearspower">https://docs.mql4.com/indicators/ibearspower</a>
      */
     public static Indicator iBearsPower(String symbol, Timeframe timeframe, long period, AppliedPrice appliedPrice, long shift) {
         return new Indicator(iBearsPower, JsonNodeFactory.instance.arrayNode(5)
@@ -198,7 +198,7 @@ public class Indicator {
      *
      * @param symbol       Symbol name on the data of which the indicator will be calculated. NULL means the current
      *                     symbol.
-     * @param timeframe    Timeframe. It can be any {@link StandardTimeframe}. 0 means the current chart timeframe.
+     * @param timeframe    Timeframe. It can be any {@link StandardTimeframe}.
      * @param period       Averaging period to calculate the main line.
      * @param deviation    Number of standard deviations from the main line.
      * @param bandsShift   The indicator shift relative to the chart.
@@ -207,7 +207,7 @@ public class Indicator {
      * @param shift        Index of the value taken from the indicator buffer (shift relative to the current bar the
      *                     given amount of periods ago).
      * @return Numerical value of the Bollinger Bands® indicator.
-     * <a href="https://docs.mql4.com/indicators/ibands">https://docs.mql4.com/indicators/ibands</a>
+     * @see <a href="https://docs.mql4.com/indicators/ibands">https://docs.mql4.com/indicators/ibands</a>
      */
     public static Indicator iBands(String symbol, Timeframe timeframe, long period, double deviation, double bandsShift, AppliedPrice appliedPrice, IndicatorLine_iBands mode, long shift) {
         return new Indicator(iBands, JsonNodeFactory.instance.arrayNode(9)
@@ -226,13 +226,13 @@ public class Indicator {
      *
      * @param symbol       Symbol name on the data of which the indicator will be calculated. NULL means the current
      *                     symbol.
-     * @param timeframe    Timeframe. It can be any {@link StandardTimeframe}. 0 means the current chart timeframe.
+     * @param timeframe    Timeframe. It can be any {@link StandardTimeframe}.
      * @param period       Averaging period for calculation.
      * @param appliedPrice Applied price. It can be any {@link AppliedPrice}.
      * @param shift        Index of the value taken from the indicator buffer (shift relative to the current bar the
      *                     given amount of periods ago).
      * @return Numerical value of the Bulls Power indicator.
-     * <a href="https://docs.mql4.com/indicators/ibullspower">https://docs.mql4.com/indicators/ibullspower</a>
+     * @see <a href="https://docs.mql4.com/indicators/ibullspower">https://docs.mql4.com/indicators/ibullspower</a>
      */
     public static Indicator iBullsPower(String symbol, Timeframe timeframe, long period, AppliedPrice appliedPrice, long shift) {
         return new Indicator(iBullsPower, JsonNodeFactory.instance.arrayNode(5)
@@ -248,13 +248,13 @@ public class Indicator {
      *
      * @param symbol       Symbol name on the data of which the indicator will be calculated. NULL means the current
      *                     symbol.
-     * @param timeframe    Timeframe. It can be any {@link StandardTimeframe}. 0 means the current chart timeframe.
+     * @param timeframe    Timeframe. It can be any {@link StandardTimeframe}.
      * @param period       Averaging period for calculation.
      * @param appliedPrice Applied price. It can be any {@link AppliedPrice}.
      * @param shift        Index of the value taken from the indicator buffer (shift relative to the current bar the
      *                     given amount of periods ago).
      * @return Numerical value of the Commodity Channel Index indicator.
-     * <a href="https://docs.mql4.com/indicators/icci">https://docs.mql4.com/indicators/icci</a>
+     * @see <a href="https://docs.mql4.com/indicators/icci">https://docs.mql4.com/indicators/icci</a>
      */
     public static Indicator iCCI(String symbol, Timeframe timeframe, long period, AppliedPrice appliedPrice, long shift) {
         return new Indicator(iCCI, JsonNodeFactory.instance.arrayNode(5)
@@ -270,12 +270,12 @@ public class Indicator {
      *
      * @param symbol    Symbol name on the data of which the indicator will be calculated. NULL means the current
      *                  symbol.
-     * @param timeframe Timeframe. It can be any {@link StandardTimeframe}. 0 means the current chart timeframe.
+     * @param timeframe Timeframe. It can be any {@link StandardTimeframe}.
      * @param period    Averaging period for calculation.
      * @param shift     Index of the value taken from the indicator buffer (shift relative to the current bar the given
      *                  amount of periods ago).
      * @return Numerical value of the DeMarker indicator.
-     * <a href="https://docs.mql4.com/indicators/idemarker">https://docs.mql4.com/indicators/idemarker</a>
+     * @see <a href="https://docs.mql4.com/indicators/idemarker">https://docs.mql4.com/indicators/idemarker</a>
      */
     public static Indicator iDeMarker(String symbol, Timeframe timeframe, long period, long shift) {
         return new Indicator(iDeMarker, JsonNodeFactory.instance.arrayNode(4)
@@ -290,7 +290,7 @@ public class Indicator {
      *
      * @param symbol       Symbol name on the data of which the indicator will be calculated. NULL means the current
      *                     symbol.
-     * @param timeframe    Timeframe. It can be any {@link StandardTimeframe}. 0 means the current chart timeframe.
+     * @param timeframe    Timeframe. It can be any {@link StandardTimeframe}.
      * @param maPeriod     Averaging period for calculation of the main line.
      * @param maMethod     Moving Average method. It can be any {@link SmoothingMethod}.
      * @param maShift      MA shift. Indicator line offset relate to the chart by timeframe.
@@ -300,7 +300,7 @@ public class Indicator {
      * @param shift        Index of the value taken from the indicator buffer (shift relative to the current bar the
      *                     given amount of periods ago).
      * @return Numerical value of the Envelopes indicator.
-     * <a href="https://docs.mql4.com/indicators/ienvelopes">https://docs.mql4.com/indicators/ienvelopes</a>
+     * @see <a href="https://docs.mql4.com/indicators/ienvelopes">https://docs.mql4.com/indicators/ienvelopes</a>
      */
     public static Indicator iEnvelopes(String symbol, Timeframe timeframe, long maPeriod, SmoothingMethod maMethod, double maShift, AppliedPrice appliedPrice, double deviation, IndicatorLine_iBands mode, long shift) {
         return new Indicator(iEnvelopes, JsonNodeFactory.instance.arrayNode(9)
@@ -320,14 +320,14 @@ public class Indicator {
      *
      * @param symbol       Symbol name on the data of which the indicator will be calculated. NULL means the current
      *                     symbol.
-     * @param timeframe    Timeframe. It can be any {@link StandardTimeframe}. 0 means the current chart timeframe.
+     * @param timeframe    Timeframe. It can be any {@link StandardTimeframe}.
      * @param period       Averaging period for calculation.
      * @param maMethod     Moving Average method. It can be any {@link SmoothingMethod}.
      * @param appliedPrice Applied price. It can be any {@link AppliedPrice}.
      * @param shift        Index of the value taken from the indicator buffer (shift relative to the current bar the
      *                     given amount of periods ago).
      * @return Numerical value of the Force Index indicator.
-     * <a href="https://docs.mql4.com/indicators/iforce">https://docs.mql4.com/indicators/iforce</a>
+     * @see <a href="https://docs.mql4.com/indicators/iforce">https://docs.mql4.com/indicators/iforce</a>
      */
     public static Indicator iForce(String symbol, Timeframe timeframe, long period, SmoothingMethod maMethod, AppliedPrice appliedPrice, long shift) {
         return new Indicator(iForce, JsonNodeFactory.instance.arrayNode(6)
@@ -339,164 +339,388 @@ public class Indicator {
                 .add(shift));
     }
 
-    public static Indicator iFractals(String arg0, long arg1, long arg2, double arg3) {
+    /**
+     * Calculates the Fractals indicator and returns its value.
+     *
+     * @param symbol    Symbol name on the data of which the indicator will be calculated. NULL means the current
+     *                  symbol.
+     * @param timeframe Timeframe. It can be any {@link StandardTimeframe}.
+     * @param mode      Indicator line index. It can be any {@link IndicatorLine_iBands}.
+     * @param shift     Index of the value taken from the indicator buffer (shift relative to the current bar the given
+     *                  amount of periods ago).
+     * @return Numerical value of the Fractals indicator.
+     * @see <a href="https://docs.mql4.com/indicators/ifractals">https://docs.mql4.com/indicators/ifractals</a>
+     */
+    public static Indicator iFractals(String symbol, Timeframe timeframe, IndicatorLine_iBands mode, double shift) {
         return new Indicator(iFractals, JsonNodeFactory.instance.arrayNode(4)
-                .add(arg0)
-                .add(arg1)
-                .add(arg2)
-                .add(arg3));
+                .add(symbol)
+                .add(timeframe.getMinutes())
+                .add(mode.id)
+                .add(shift));
     }
 
-    public static Indicator iGator(String arg0, long arg1, long arg2, long arg3, long arg4, long arg5, long arg6, long arg7, long arg8, long arg9, long arg10, long arg11) {
+    /**
+     * Calculates the Gator oscillator and returns its value.
+     *
+     * @param symbol       Symbol name on the data of which the indicator will be calculated. NULL means the current
+     *                     symbol.
+     * @param timeframe    Timeframe. It can be any {@link StandardTimeframe}.
+     * @param jawPeriod    Blue line averaging period (Alligator's Jaw).
+     * @param jawShift     Blue line shift relative to the chart.
+     * @param teethPeriod  Red line averaging period (Alligator's Teeth).
+     * @param teethShift   Red line shift relative to the chart.
+     * @param lipsPeriod   Green line averaging period (Alligator's Lips).
+     * @param lipsShift    Green line shift relative to the chart.
+     * @param maMethod     MA method. It can be any {@link SmoothingMethod}.
+     * @param appliedPrice Applied price. It can be any {@link AppliedPrice}.
+     * @param mode         Indicator line index. It can be any {@link IndicatorLine_iBands}.
+     * @param shift        Index of the value taken from the indicator buffer (shift relative to the current bar the
+     *                     given amount of periods ago).
+     * @return Numerical value of the Gator oscillator.
+     * @see <a href="https://docs.mql4.com/indicators/igator">https://docs.mql4.com/indicators/igator</a>
+     */
+    public static Indicator iGator(String symbol, Timeframe timeframe, long jawPeriod, long jawShift, long teethPeriod, long teethShift, long lipsPeriod, long lipsShift, SmoothingMethod maMethod, AppliedPrice appliedPrice, IndicatorLine_iBands mode, long shift) {
         return new Indicator(iGator, JsonNodeFactory.instance.arrayNode(12)
-                .add(arg0)
-                .add(arg1)
-                .add(arg2)
-                .add(arg3)
-                .add(arg4)
-                .add(arg5)
-                .add(arg6)
-                .add(arg7)
-                .add(arg8)
-                .add(arg9)
-                .add(arg10)
-                .add(arg11));
+                .add(symbol)
+                .add(timeframe.getMinutes())
+                .add(jawPeriod)
+                .add(jawShift)
+                .add(teethPeriod)
+                .add(teethShift)
+                .add(lipsPeriod)
+                .add(lipsShift)
+                .add(maMethod.id)
+                .add(appliedPrice.id)
+                .add(mode.id)
+                .add(shift));
     }
 
-    public static Indicator iIchimoku(String arg0, long arg1, long arg2, long arg3, long arg4, long arg5, long arg6) {
+    /**
+     * Calculates the Ichimoku Kinko Hyo indicator and returns its value.
+     *
+     * @param symbol      Symbol name on the data of which the indicator will be calculated. NULL means the current
+     *                    symbol.
+     * @param timeframe   Timeframe. It can be any {@link StandardTimeframe}.
+     * @param tenkanSen   Tenkan Sen averaging period.
+     * @param kijunSen    Kijun Sen averaging period.
+     * @param senkouSpanB Senkou SpanB averaging period.
+     * @param mode        Source of data. It can be any {@link IndicatorLine_iIchimoku}.
+     * @param shift       Index of the value taken from the indicator buffer (shift relative to the current bar the
+     *                    given amount of periods ago).
+     * @return Numerical value of the Ichimoku Kinko Hyo indicator.
+     * @see <a href="https://docs.mql4.com/indicators/iichimoku">https://docs.mql4.com/indicators/iichimoku</a>
+     */
+    public static Indicator iIchimoku(String symbol, Timeframe timeframe, long tenkanSen, long kijunSen, long senkouSpanB, IndicatorLine_iIchimoku mode, long shift) {
         return new Indicator(iIchimoku, JsonNodeFactory.instance.arrayNode(7)
-                .add(arg0)
-                .add(arg1)
-                .add(arg2)
-                .add(arg3)
-                .add(arg4)
-                .add(arg5)
-                .add(arg6));
+                .add(symbol)
+                .add(timeframe.getMinutes())
+                .add(tenkanSen)
+                .add(kijunSen)
+                .add(senkouSpanB)
+                .add(mode.id)
+                .add(shift));
     }
 
-    public static Indicator iBWMFI(String arg0, long arg1, long arg2) {
+    /**
+     * Calculates the Market Facilitation Index indicator and returns its value..
+     *
+     * @param symbol    Symbol name on the data of which the indicator will be calculated. NULL means the current
+     *                  symbol.
+     * @param timeframe Timeframe. It can be any {@link StandardTimeframe}.
+     * @param shift     Index of the value taken from the indicator buffer (shift relative to the current bar the given
+     *                  amount of periods ago).
+     * @return Numerical value of the Market Facilitation Index indicator.
+     * @see <a href="https://docs.mql4.com/indicators/ibwmfi">https://docs.mql4.com/indicators/ibwmfi</a>
+     */
+    public static Indicator iBWMFI(String symbol, Timeframe timeframe, long shift) {
         return new Indicator(iBWMFI, JsonNodeFactory.instance.arrayNode(3)
-                .add(arg0)
-                .add(arg1)
-                .add(arg2));
+                .add(symbol)
+                .add(timeframe.getMinutes())
+                .add(shift));
     }
 
-    public static Indicator iMomentum(String arg0, long arg1, long arg2, long arg3, long arg4) {
+    /**
+     * Calculates the Momentum indicator and returns its value.
+     *
+     * @param symbol       Symbol name on the data of which the indicator will be calculated. NULL means the current
+     *                     symbol.
+     * @param timeframe    Timeframe. It can be any {@link StandardTimeframe}.
+     * @param period       Averaging period (amount of bars) for calculation of price changes.
+     * @param appliedPrice Applied price. It can be any {@link AppliedPrice}.
+     * @param shift        Index of the value taken from the indicator buffer (shift relative to the current bar the
+     *                     given amount of periods ago).
+     * @return Numerical value of the Momentum indicator.
+     * @see <a href="https://docs.mql4.com/indicators/imomentum">https://docs.mql4.com/indicators/imomentum</a>
+     */
+    public static Indicator iMomentum(String symbol, Timeframe timeframe, long period, AppliedPrice appliedPrice, long shift) {
         return new Indicator(iMomentum, JsonNodeFactory.instance.arrayNode(5)
-                .add(arg0)
-                .add(arg1)
-                .add(arg2)
-                .add(arg3)
-                .add(arg4));
+                .add(symbol)
+                .add(timeframe.getMinutes())
+                .add(period)
+                .add(appliedPrice.id)
+                .add(shift));
     }
 
-    public static Indicator iMFI(String arg0, long arg1, long arg2, long arg3) {
+    /**
+     * Calculates the Money Flow Index indicator and returns its value.
+     *
+     * @param symbol    Symbol name on the data of which the indicator will be calculated. NULL means the current
+     *                  symbol.
+     * @param timeframe Timeframe. It can be any {@link StandardTimeframe}.
+     * @param period    Period (amount of bars) for calculation of the indicator.
+     * @param shift     Index of the value taken from the indicator buffer (shift relative to the current bar the given
+     *                  amount of periods ago).
+     * @return Numerical value of the Money Flow Index indicator.
+     * @see <a href="https://docs.mql4.com/indicators/imfi">https://docs.mql4.com/indicators/imfi</a>
+     */
+    public static Indicator iMFI(String symbol, Timeframe timeframe, long period, long shift) {
         return new Indicator(iMFI, JsonNodeFactory.instance.arrayNode(4)
-                .add(arg0)
-                .add(arg1)
-                .add(arg2)
-                .add(arg3));
+                .add(symbol)
+                .add(timeframe.getMinutes())
+                .add(period)
+                .add(shift));
     }
 
-    public static Indicator iMA(String arg0, long arg1, long arg2, long arg3, long arg4, long arg5, long arg6) {
+    /**
+     * Calculates the Moving Average indicator and returns its value.
+     *
+     * @param symbol       Symbol name on the data of which the indicator will be calculated. NULL means the current
+     *                     symbol.
+     * @param timeframe    Timeframe. It can be any {@link StandardTimeframe}.
+     * @param maPeriod     Averaging period for calculation.
+     * @param maShift      MA shift. Indicators line offset relate to the chart by timeframe.
+     * @param maMethod     Moving Average method. It can be any {@link SmoothingMethod}.
+     * @param appliedPrice Applied price. It can be any {@link AppliedPrice}.
+     * @param shift        Index of the value taken from the indicator buffer (shift relative to the current bar the
+     *                     given amount of periods ago).
+     * @return Numerical value of the Moving Average indicator.
+     * @see <a href="https://docs.mql4.com/indicators/ima">https://docs.mql4.com/indicators/ima</a>
+     */
+    public static Indicator iMA(String symbol, Timeframe timeframe, long maPeriod, long maShift, SmoothingMethod maMethod, AppliedPrice appliedPrice, long shift) {
         return new Indicator(iMA, JsonNodeFactory.instance.arrayNode(7)
-                .add(arg0)
-                .add(arg1)
-                .add(arg2)
-                .add(arg3)
-                .add(arg4)
-                .add(arg5)
-                .add(arg6));
+                .add(symbol)
+                .add(timeframe.getMinutes())
+                .add(maPeriod)
+                .add(maShift)
+                .add(maMethod.id)
+                .add(appliedPrice.id)
+                .add(shift));
     }
 
-    public static Indicator iOsMA(String arg0, long arg1, long arg2, long arg3, long arg4, long arg5, long arg6) {
+    /**
+     * Calculates the Moving Average of Oscillator indicator and returns its value.
+     *
+     * @param symbol        Symbol name on the data of which the indicator will be calculated. NULL means the current
+     *                      symbol.
+     * @param timeframe     Timeframe. It can be any {@link StandardTimeframe}.
+     * @param fastEmaPeriod Fast EMA averaging period.
+     * @param slowEmaPeriod Slow EMA averaging period.
+     * @param signalPeriod  Signal line averaging period.
+     * @param appliedPrice  Applied price. It can be any {@link AppliedPrice}.
+     * @param shift         Index of the value taken from the indicator buffer (shift relative to the current bar the
+     *                      given amount of periods ago).
+     * @return Numerical value of the Moving Average of Oscillator.
+     * @see <a href="https://docs.mql4.com/indicators/iosma">https://docs.mql4.com/indicators/iosma</a>
+     */
+    public static Indicator iOsMA(String symbol, Timeframe timeframe, long fastEmaPeriod, long slowEmaPeriod, long signalPeriod, AppliedPrice appliedPrice, long shift) {
         return new Indicator(iOsMA, JsonNodeFactory.instance.arrayNode(7)
-                .add(arg0)
-                .add(arg1)
-                .add(arg2)
-                .add(arg3)
-                .add(arg4)
-                .add(arg5)
-                .add(arg6));
+                .add(symbol)
+                .add(timeframe.getMinutes())
+                .add(fastEmaPeriod)
+                .add(slowEmaPeriod)
+                .add(signalPeriod)
+                .add(appliedPrice.id)
+                .add(shift));
     }
 
-    public static Indicator iMACD(String arg0, long arg1, long arg2, long arg3, long arg4, long arg5, long arg6, long arg7) {
+    /**
+     * Calculates the Moving Averages Convergence/Divergence indicator and returns its value.
+     *
+     * @param symbol        Symbol name on the data of which the indicator will be calculated. NULL means the current
+     *                      symbol.
+     * @param timeframe     Timeframe. It can be any {@link StandardTimeframe}.
+     * @param fastEmaPeriod Fast EMA averaging period.
+     * @param slowEmaPeriod Slow EMA averaging period.
+     * @param signalPeriod  Signal line averaging period.
+     * @param appliedPrice  Applied price. It can be any {@link AppliedPrice}.
+     * @param mode          Indicator line index. It can be any {@link IndicatorLine_iMACD}.
+     * @param shift         Index of the value taken from the indicator buffer (shift relative to the current bar the
+     *                      given amount of periods ago).
+     * @return Numerical value of the Moving Average of Oscillator indicator.
+     * @see <a href="https://docs.mql4.com/indicators/imacd">https://docs.mql4.com/indicators/imacd</a>
+     */
+    public static Indicator iMACD(String symbol, Timeframe timeframe, long fastEmaPeriod, long slowEmaPeriod, long signalPeriod, AppliedPrice appliedPrice, IndicatorLine_iMACD mode, long shift) {
         return new Indicator(iMACD, JsonNodeFactory.instance.arrayNode(8)
-                .add(arg0)
-                .add(arg1)
-                .add(arg2)
-                .add(arg3)
-                .add(arg4)
-                .add(arg5)
-                .add(arg6)
-                .add(arg7));
+                .add(symbol)
+                .add(timeframe.getMinutes())
+                .add(fastEmaPeriod)
+                .add(slowEmaPeriod)
+                .add(signalPeriod)
+                .add(appliedPrice.id)
+                .add(mode.id)
+                .add(shift));
     }
 
-    public static Indicator iOBV(String arg0, long arg1, long arg2, long arg3) {
+    /**
+     * Calculates the On Balance Volume indicator and returns its value.
+     *
+     * @param symbol       Symbol name on the data of which the indicator will be calculated. NULL means the current
+     *                     symbol.
+     * @param timeframe    Timeframe. It can be any {@link StandardTimeframe}.
+     * @param appliedPrice Applied price. It can be any {@link AppliedPrice}.
+     * @param shift        Index of the value taken from the indicator buffer (shift relative to the current bar the
+     *                     given amount of periods ago).
+     * @return Numerical value of the On Balance Volume indicator.
+     * @see <a href="https://docs.mql4.com/indicators/iobv">https://docs.mql4.com/indicators/iobv</a>
+     */
+    public static Indicator iOBV(String symbol, Timeframe timeframe, AppliedPrice appliedPrice, long shift) {
         return new Indicator(iOBV, JsonNodeFactory.instance.arrayNode(4)
-                .add(arg0)
-                .add(arg1)
-                .add(arg2)
-                .add(arg3));
+                .add(symbol)
+                .add(timeframe.getMinutes())
+                .add(appliedPrice.id)
+                .add(shift));
     }
 
-    public static Indicator iSAR(String arg0, long arg1, double arg2, double arg3, long arg4) {
-        return new Indicator(iSAR, JsonNodeFactory.instance.arrayNode(4)
-                .add(arg0)
-                .add(arg1)
-                .add(arg2)
-                .add(arg3)
-                .add(arg4));
+    /**
+     * Calculates the Parabolic Stop and Reverse system indicator and returns its value.
+     *
+     * @param symbol    Symbol name on the data of which the indicator will be calculated. NULL means the current
+     *                  symbol.
+     * @param timeframe Timeframe. It can be any {@link StandardTimeframe}.
+     * @param step      The step of price increment, usually 0.02.
+     * @param maximum   The maximum step, usually 0.2.
+     * @param shift     Index of the value taken from the indicator buffer (shift relative to the current bar the given
+     *                  amount of periods ago).
+     * @return Numerical value of the Parabolic Stop and Reverse system indicator.
+     * @see <a href="https://docs.mql4.com/indicators/isar">https://docs.mql4.com/indicators/isar</a>
+     */
+    public static Indicator iSAR(String symbol, Timeframe timeframe, double step, double maximum, long shift) {
+        return new Indicator(iSAR, JsonNodeFactory.instance.arrayNode(5)
+                .add(symbol)
+                .add(timeframe.getMinutes())
+                .add(step)
+                .add(maximum)
+                .add(shift));
     }
 
-    public static Indicator iRSI(String arg0, long arg1, long arg2, long arg3, long arg4) {
+    /**
+     * Calculates the Relative Strength Index indicator and returns its value.
+     *
+     * @param symbol       Symbol name on the data of which the indicator will be calculated. NULL means the current
+     *                     symbol.
+     * @param timeframe    Timeframe. It can be any {@link StandardTimeframe}.
+     * @param period       Averaging period for calculation.
+     * @param appliedPrice Applied price. It can be any {@link AppliedPrice}.
+     * @param shift        Index of the value taken from the indicator buffer (shift relative to the current bar the
+     *                     given amount of periods ago).
+     * @return Numerical value of the Relative Strength Index indicator.
+     * @see <a href="https://docs.mql4.com/indicators/irsi">https://docs.mql4.com/indicators/irsi</a>
+     */
+    public static Indicator iRSI(String symbol, Timeframe timeframe, long period, AppliedPrice appliedPrice, long shift) {
         return new Indicator(iRSI, JsonNodeFactory.instance.arrayNode(5)
-                .add(arg0)
-                .add(arg1)
-                .add(arg2)
-                .add(arg3)
-                .add(arg4));
+                .add(symbol)
+                .add(timeframe.getMinutes())
+                .add(period)
+                .add(appliedPrice.id)
+                .add(shift));
     }
 
-    public static Indicator iRVI(String arg0, long arg1, long arg2, long arg3, long arg4) {
+    /**
+     * Calculates the Relative Vigor Index indicator and returns its value.
+     *
+     * @param symbol    Symbol name on the data of which the indicator will be calculated. NULL means the current
+     *                  symbol.
+     * @param timeframe Timeframe. It can be any {@link StandardTimeframe}.
+     * @param period    Averaging period for calculation.
+     * @param mode      Indicator line index. It can be any {@link IndicatorLine_iMACD}.
+     * @param shift     Index of the value taken from the indicator buffer (shift relative to the current bar the given
+     *                  amount of periods ago).
+     * @return Numerical value of the Relative Vigor Index indicator.
+     * @see <a href="https://docs.mql4.com/indicators/irvi">https://docs.mql4.com/indicators/irvi</a>
+     */
+    public static Indicator iRVI(String symbol, Timeframe timeframe, long period, IndicatorLine_iMACD mode, long shift) {
         return new Indicator(iRVI, JsonNodeFactory.instance.arrayNode(5)
-                .add(arg0)
-                .add(arg1)
-                .add(arg2)
-                .add(arg3)
-                .add(arg4));
+                .add(symbol)
+                .add(timeframe.getMinutes())
+                .add(period)
+                .add(mode.id)
+                .add(shift));
     }
 
-    public static Indicator iStdDev(String arg0, long arg1, long arg2, long arg3, long arg4, long arg5, long arg6) {
+    /**
+     * Calculates the Standard Deviation indicator and returns its value.
+     *
+     * @param symbol       Symbol name on the data of which the indicator will be calculated. NULL means the current
+     *                     symbol.
+     * @param timeframe    Timeframe. It can be any {@link StandardTimeframe}.
+     * @param maPeriod     Moving Average period.
+     * @param maShift      Moving Average shift.
+     * @param maMethod     Moving Average method. It can be any {@link SmoothingMethod}.
+     * @param appliedPrice Applied price. It can be any {@link AppliedPrice}.
+     * @param shift        Index of the value taken from the indicator buffer (shift relative to the current bar the
+     *                     given amount of periods ago).
+     * @return Numerical value of the Standard Deviation indicator.
+     * @see <a href="https://docs.mql4.com/indicators/istddev">https://docs.mql4.com/indicators/istddev</a>
+     */
+    public static Indicator iStdDev(String symbol, Timeframe timeframe, long maPeriod, long maShift, SmoothingMethod maMethod, AppliedPrice appliedPrice, long shift) {
         return new Indicator(iStdDev, JsonNodeFactory.instance.arrayNode(7)
-                .add(arg0)
-                .add(arg1)
-                .add(arg2)
-                .add(arg3)
-                .add(arg4)
-                .add(arg5)
-                .add(arg6));
+                .add(symbol)
+                .add(timeframe.getMinutes())
+                .add(maPeriod)
+                .add(maShift)
+                .add(maMethod.id)
+                .add(appliedPrice.id)
+                .add(shift));
     }
 
-    public static Indicator iStochastic(String arg0, long arg1, long arg2, long arg3, long arg4, long arg5, long arg6, long arg7, long arg8) {
+    /**
+     * Calculates the Stochastic Oscillator and returns its value.
+     *
+     * @param symbol     Symbol name on the data of which the indicator will be calculated. NULL means the current
+     *                   symbol.
+     * @param timeframe  Timeframe. It can be any {@link StandardTimeframe}.
+     * @param kPeriod    Period of the %K line.
+     * @param dPeriod    Period of the %D line.
+     * @param slowing    Slowing value.
+     * @param method     Moving Average method. It can be any {@link SmoothingMethod}.
+     * @param priceField Price field parameter. Can be any {@link PriceField}.
+     * @param mode       Indicator line index. It can be any {@link IndicatorLine_iMACD}.
+     * @param shift      Index of the value taken from the indicator buffer (shift relative to the current bar the given
+     *                   amount of periods ago).
+     * @return Numerical value of the Stochastic Oscillator.
+     * @see <a href="https://docs.mql4.com/indicators/istochastic">https://docs.mql4.com/indicators/istochastic</a>
+     */
+    public static Indicator iStochastic(String symbol, Timeframe timeframe, long kPeriod, long dPeriod, long slowing, SmoothingMethod method, PriceField priceField, IndicatorLine_iMACD mode, long shift) {
         return new Indicator(iStochastic, JsonNodeFactory.instance.arrayNode(9)
-                .add(arg0)
-                .add(arg1)
-                .add(arg2)
-                .add(arg3)
-                .add(arg4)
-                .add(arg5)
-                .add(arg6)
-                .add(arg7)
-                .add(arg8));
+                .add(symbol)
+                .add(timeframe.getMinutes())
+                .add(kPeriod)
+                .add(dPeriod)
+                .add(slowing)
+                .add(method.id)
+                .add(priceField.id)
+                .add(mode.id)
+                .add(shift));
     }
 
-    public static Indicator iWPR(String arg0, long arg1, long arg2, long arg3) {
+    /**
+     * Calculates the Larry Williams' Percent Range and returns its value.
+     *
+     * @param symbol    Symbol name on the data of which the indicator will be calculated. NULL means the current
+     *                  symbol.
+     * @param timeframe Timeframe. It can be any {@link StandardTimeframe}.
+     * @param period    Averaging period for calculation.
+     * @param shift     Index of the value taken from the indicator buffer (shift relative to the current bar the given
+     *                  amount of periods ago).
+     * @return Numerical value of the Larry Williams' Percent Range indicator.
+     * @see <a href="https://docs.mql4.com/indicators/iwpr">https://docs.mql4.com/indicators/iwpr</a>
+     */
+    public static Indicator iWPR(String symbol, Timeframe timeframe, long period, long shift) {
         return new Indicator(iWPR, JsonNodeFactory.instance.arrayNode(4)
-                .add(arg0)
-                .add(arg1)
-                .add(arg2)
-                .add(arg3));
+                .add(symbol)
+                .add(timeframe.getMinutes())
+                .add(period)
+                .add(shift));
     }
 
     private final String name;
@@ -507,11 +731,11 @@ public class Indicator {
         this.arguments = arguments;
     }
 
-    public String getName() {
+    String getName() {
         return name;
     }
 
-    public ArrayNode getArguments() {
+    ArrayNode getArguments() {
         return arguments;
     }
 }

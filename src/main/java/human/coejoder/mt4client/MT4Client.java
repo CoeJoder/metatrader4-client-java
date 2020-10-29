@@ -6,8 +6,10 @@ import com.fasterxml.jackson.databind.InjectableValues;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.IntNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.fasterxml.jackson.databind.node.TextNode;
 import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,12 +28,16 @@ public class MT4Client implements AutoCloseable {
     private static final int ENABLED = 1;
     private static final int DEFAULT_REQUEST_TIMEOUT_MILLIS = 10000;
     private static final int DEFAULT_RESPONSE_TIMEOUT_MILLIS = 10000;
+    private static final int DEFAULT_INDICATOR_TIMEOUT = 5000;
     private static final String ERROR_CODE = "error_code";
     private static final String ERROR_CODE_DESCRIPTION = "error_code_description";
     private static final String ERROR_MESSAGE = "error_message";
     private static final String WARNING = "warning";
     private static final String RESPONSE = "response";
     private static final String NAMES = "names";
+    private static final String INDICATOR = "indicator";
+    private static final String ARGV = "argv";
+    private static final String TIMEOUT = "timeout";
     private static final TypeReference<List<String>> LIST_OF_STRINGS = new TypeReference<>() {};
     private static final TypeReference<HashMap<String, Symbol>> MAP_OF_SYMBOLS = new TypeReference<>() {};
     private static final TypeReference<HashMap<String, Signal>> MAP_OF_SIGNALS = new TypeReference<>() {};
@@ -180,6 +186,37 @@ public class MT4Client implements AutoCloseable {
      */
     public Signal getSignal(String name) throws JsonProcessingException, MT4Exception {
         return getSignals(name).get(name);
+    }
+
+    /**
+     * Run a built-in indicator function, waiting at most {@value DEFAULT_INDICATOR_TIMEOUT} milliseconds for symbol's
+     * chart data to load.
+     *
+     * @param func The {@link Indicator} to run.
+     * @return The numeric result.
+     * @throws JsonProcessingException If JSON response fails to parse.
+     * @throws MT4Exception            If server had an error.
+     * @see <a href="https://docs.mql4.com/indicators">https://docs.mql4.com/indicators</a>
+     */
+    public double runIndicator(Indicator func) throws JsonProcessingException, MT4Exception {
+        return runIndicator(func, DEFAULT_INDICATOR_TIMEOUT);
+    }
+
+    /**
+     * Run a built-in indicator function.
+     *
+     * @param func    The {@link Indicator} to run.
+     * @param timeout The maximum milliseconds to wait for the symbol's chart data to load.
+     * @return The numeric result.
+     * @throws JsonProcessingException If JSON response fails to parse.
+     * @throws MT4Exception            If server had an error.
+     * @see <a href="https://docs.mql4.com/indicators">https://docs.mql4.com/indicators</a>
+     */
+    public double runIndicator(Indicator func, int timeout) throws JsonProcessingException, MT4Exception {
+        return getResponse(Request.RUN_INDICATOR.build()
+                .<ObjectNode>set(INDICATOR, TextNode.valueOf(func.getName()))
+                .<ObjectNode>set(ARGV, func.getArguments())
+                .set(TIMEOUT, IntNode.valueOf(timeout)), double.class);
     }
 
     /**
