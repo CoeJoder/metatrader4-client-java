@@ -38,9 +38,11 @@ public class MT4Client implements AutoCloseable {
     private static final String INDICATOR = "indicator";
     private static final String ARGV = "argv";
     private static final String TIMEOUT = "timeout";
+    private static final String TICKET = "ticket";
     private static final TypeReference<List<String>> LIST_OF_STRINGS = new TypeReference<>() {};
     private static final TypeReference<HashMap<String, Symbol>> MAP_OF_SYMBOLS = new TypeReference<>() {};
     private static final TypeReference<HashMap<String, Signal>> MAP_OF_SIGNALS = new TypeReference<>() {};
+    private static final TypeReference<List<Order>> LIST_OF_ORDERS = new TypeReference<>() {};
 
     private final ZContext context;
     private final ZMQ.Socket socket;
@@ -217,6 +219,41 @@ public class MT4Client implements AutoCloseable {
                 .<ObjectNode>set(INDICATOR, TextNode.valueOf(func.getName()))
                 .<ObjectNode>set(ARGV, func.getArguments())
                 .set(TIMEOUT, IntNode.valueOf(timeout)), double.class);
+    }
+
+    /**
+     * Get the pending and open orders from the Trades tab.
+     *
+     * @return A list of open or pending {@link Order Orders}.
+     * @throws JsonProcessingException If JSON response fails to parse.
+     * @throws MT4Exception            If server had an error.
+     */
+    public List<Order> getOrders() throws JsonProcessingException, MT4Exception {
+        return getResponse(Request.GET_ORDERS.build(), LIST_OF_ORDERS);
+    }
+
+    /**
+     * Get the deleted and closed orders from the Account History tab.
+     *
+     * @return A list of closed {@link Order Orders}.
+     * @throws JsonProcessingException If JSON response fails to parse.
+     * @throws MT4Exception            If server had an error.
+     */
+    public List<Order> getOrdersHistorical() throws JsonProcessingException, MT4Exception {
+        return getResponse(Request.GET_HISTORICAL_ORDERS.build(), LIST_OF_ORDERS);
+    }
+
+    /**
+     * Get an order by ticket number.  May be pending, open, or closed.
+     *
+     * @param ticket The ticket number.
+     * @return The {@link Order} object.
+     * @throws JsonProcessingException If JSON response fails to parse.
+     * @throws MT4Exception            If server had an error.
+     */
+    public Order getOrder(int ticket) throws JsonProcessingException, MT4Exception {
+        return getResponse(Request.GET_ORDER.build()
+                .set(TICKET, IntNode.valueOf(ticket)), Order.class);
     }
 
     /**
