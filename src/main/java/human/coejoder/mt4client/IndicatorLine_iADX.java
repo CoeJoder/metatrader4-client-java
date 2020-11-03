@@ -1,7 +1,7 @@
 package human.coejoder.mt4client;
 
 /**
- * Indicator line identifiers used in {@link Indicator#iADX(String, Timeframe, long, AppliedPrice, long, long) iADX()} indicator.
+ * Indicator line identifiers used in iADX() indicator.
  */
 public enum IndicatorLine_iADX {
     MAIN(0),

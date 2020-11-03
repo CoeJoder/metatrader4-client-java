@@ -351,7 +351,7 @@ public class Indicator {
      * @return Numerical value of the Fractals indicator.
      * @see <a href="https://docs.mql4.com/indicators/ifractals">https://docs.mql4.com/indicators/ifractals</a>
      */
-    public static Indicator iFractals(String symbol, Timeframe timeframe, IndicatorLine_iBands mode, double shift) {
+    public static Indicator iFractals(String symbol, Timeframe timeframe, IndicatorLine_iBands mode, long shift) {
         return new Indicator(iFractals, JsonNodeFactory.instance.arrayNode(4)
                 .add(symbol)
                 .add(timeframe.getMinutes())
