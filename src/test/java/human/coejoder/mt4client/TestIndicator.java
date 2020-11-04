@@ -123,7 +123,7 @@ public class TestIndicator extends TestBase {
     @Test(dataProvider = "indicators")
     public void testIndicator(Indicator func) throws JsonProcessingException, MT4Exception {
         double results = mt4.runIndicator(func);
-        LOG.trace(String.format("%s(%s) = %5.4f)", func.getName(), argString(func), results));
+        LOG.trace(String.format("%s(%s) = %5.4f", func.getName(), argString(func), results));
     }
 
     private String argString(Indicator func) {

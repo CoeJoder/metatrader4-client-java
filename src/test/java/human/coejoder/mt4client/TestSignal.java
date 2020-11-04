@@ -20,7 +20,6 @@ public class TestSignal extends TestBase {
     @Override
     public void beforeClass() throws JsonProcessingException, MT4Exception {
         super.beforeClass();
-
         signalNames = mt4.getSignalNames();
     }
 
