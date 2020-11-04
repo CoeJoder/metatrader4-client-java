@@ -1,5 +1,7 @@
 package human.coejoder.mt4client;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -74,6 +76,11 @@ public enum OrderType {
      */
     public boolean isPending() {
         return this == OP_BUYLIMIT || this == OP_BUYSTOP || this == OP_SELLLIMIT || this == OP_SELLSTOP;
+    }
+
+    @JsonValue
+    public int toJson() {
+        return id;
     }
 
     @Override
