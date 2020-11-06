@@ -274,7 +274,7 @@ public class MT4Client implements AutoCloseable {
     /**
      * Create a new order.
      *
-     * @param newOrder The new order request.
+     * @param newOrder The {@link NewOrder new order request}.
      * @return The new {@link Order}.
      * @throws JsonProcessingException If JSON response fails to parse.
      * @throws MT4Exception            If server had an error.

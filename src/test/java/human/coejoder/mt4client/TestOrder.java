@@ -20,11 +20,12 @@ public class TestOrder extends TestBase {
         lots = Math.max(MIN_LOTS_BOUND, symbol.getVolumeMin());
     }
 
-    @Test(enabled = false)
+    @Test
     public void testMarketBuy() throws JsonProcessingException, MT4Exception {
+        // create a market order using relative stops
+        OrderType orderType = OrderType.OP_BUY;
         double bid = symbol.getTick().bid;
         int points = 50;
-        OrderType orderType = OrderType.OP_BUY;
         Order order = mt4.orderSend(NewOrder.Builder.newInstance()
                 .setSymbol(symbol.getName())
                 .setOrderType(orderType)
@@ -37,5 +38,27 @@ public class TestOrder extends TestBase {
         Assert.assertEquals(order.getOrderType(), orderType, "Wrong order type.");
         Assert.assertTrue(order.getSl() < bid, "Expected stop-loss to be less than current bid.");
         Assert.assertTrue(order.getTp() > bid, "Expected take-profit to be greater than current bid.");
+    }
+
+    @Test
+    public void testMarketSell() throws JsonProcessingException, MT4Exception {
+        // create a market order using absolute stops
+        OrderType orderType = OrderType.OP_SELL;
+        double bid = symbol.getTick().bid;
+        int points = 100;
+        double sl = bid + points * symbol.getPoint();
+        double tp = bid - points * symbol.getPoint();
+        Order order = mt4.orderSend(NewOrder.Builder.newInstance()
+                .setSymbol(symbol.getName())
+                .setOrderType(orderType)
+                .setLots(lots)
+                .setSl(sl)
+                .setTp(tp)
+                .build());
+
+        LOG.trace(String.format("New market sell: %s", order));
+        Assert.assertEquals(order.getOrderType(), orderType, "Wrong order type.");
+        Assert.assertTrue(order.getSl() > bid, "Expected stop-loss to be greater than current bid.");
+        Assert.assertTrue(order.getTp() < bid, "Expected take-profit to be less than current bid.");
     }
 }
