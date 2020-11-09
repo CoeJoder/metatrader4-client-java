@@ -83,4 +83,22 @@ public class TestOrder extends TestBase {
         LOG.trace(String.format("New pending buy order: %s", order));
         Assert.assertEquals(order.getOrderType(), orderType, "Wrong order type.");
     }
+
+    @Test
+    public void testLimitSell() throws JsonProcessingException, MT4Exception {
+        // create a pending sell order with no sl/tp
+        OrderType orderType = OrderType.OP_SELLLIMIT;
+        double optimisticSellPrice = symbol.getTick().bid * 2;
+        int slippage = 1;
+        Order order = mt4.orderSend(NewOrder.Builder.newInstance()
+                .setSymbol(symbol.getName())
+                .setOrderType(orderType)
+                .setLots(lots)
+                .setPrice(optimisticSellPrice)
+                .setSlippage(slippage)
+                .build());
+
+        LOG.trace(String.format("New pending sell order: %s", order));
+        Assert.assertEquals(order.getOrderType(), orderType, "Wrong order type.");
+    }
 }
