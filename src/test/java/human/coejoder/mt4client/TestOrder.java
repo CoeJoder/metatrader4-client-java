@@ -61,4 +61,26 @@ public class TestOrder extends TestBase {
         Assert.assertTrue(order.getSl() > bid, "Expected stop-loss to be greater than current bid.");
         Assert.assertTrue(order.getTp() < bid, "Expected take-profit to be less than current bid.");
     }
+
+    @Test
+    public void testLimitBuy() throws JsonProcessingException, MT4Exception {
+        // create a pending buy order with relative sl/tp
+        OrderType orderType = OrderType.OP_BUYLIMIT;
+        double optimisticBuyPrice = symbol.getTick().ask / 2;
+        int slippage = 1;
+        int slPoints = 100;
+        int tpPoints = 100;
+        Order order = mt4.orderSend(NewOrder.Builder.newInstance()
+                .setSymbol(symbol.getName())
+                .setOrderType(orderType)
+                .setLots(lots)
+                .setPrice(optimisticBuyPrice)
+                .setSlippage(slippage)
+                .setSlPoints(slPoints)
+                .setTpPoints(tpPoints)
+                .build());
+
+        LOG.trace(String.format("New pending buy order: %s", order));
+        Assert.assertEquals(order.getOrderType(), orderType, "Wrong order type.");
+    }
 }
