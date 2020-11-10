@@ -29,9 +29,9 @@ public class MT4Client implements AutoCloseable {
     private static final int DEFAULT_REQUEST_TIMEOUT_MILLIS = 10000;
     private static final int DEFAULT_RESPONSE_TIMEOUT_MILLIS = 10000;
     private static final int DEFAULT_INDICATOR_TIMEOUT = 5000;
-    private static final String ERROR_CODE = "error_code";
-    private static final String ERROR_CODE_DESCRIPTION = "error_code_description";
-    private static final String ERROR_MESSAGE = "error_message";
+    private static final String ERROR_CODE = MT4Exception.ERROR_CODE;
+    private static final String ERROR_CODE_DESCRIPTION = MT4Exception.ERROR_CODE_DESCRIPTION;
+    private static final String ERROR_MESSAGE = MT4Exception.ERROR_MESSAGE;
     private static final String WARNING = "warning";
     private static final String RESPONSE = "response";
     private static final String NAMES = "names";
@@ -39,16 +39,6 @@ public class MT4Client implements AutoCloseable {
     private static final String ARGV = "argv";
     private static final String TIMEOUT = "timeout";
     private static final String TICKET = "ticket";
-    private static final String SYMBOL = "symbol";
-    private static final String ORDER_TYPE = "order_type";
-    private static final String LOTS = "lots";
-    private static final String PRICE = "price";
-    private static final String SLIPPAGE = "slippage";
-    private static final String SL = "sl";
-    private static final String TP = "tp";
-    private static final String SL_POINTS = "sl_points";
-    private static final String TP_POINTS = "tp_points";
-    private static final String COMMENT = "comment";
     private static final TypeReference<List<String>> LIST_OF_STRINGS = new TypeReference<>() {};
     private static final TypeReference<HashMap<String, Symbol>> MAP_OF_SYMBOLS = new TypeReference<>() {};
     private static final TypeReference<HashMap<String, Signal>> MAP_OF_SIGNALS = new TypeReference<>() {};
@@ -343,7 +333,7 @@ public class MT4Client implements AutoCloseable {
         JsonNode errorCodeDescription = response.get(ERROR_CODE_DESCRIPTION);
         JsonNode errorMessage = response.get(ERROR_MESSAGE);
         if (errorCode != null || errorCodeDescription != null || errorMessage != null) {
-            throw new MT4Exception(errorCode, errorCodeDescription, errorMessage);
+            throw objectMapper.convertValue(response, MT4Exception.class);
         }
 
         // log any warnings

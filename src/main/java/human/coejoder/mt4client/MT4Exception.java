@@ -1,6 +1,10 @@
 package human.coejoder.mt4client;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,25 +16,64 @@ import static java.util.stream.Collectors.toMap;
 /**
  * Represents an error from the MT4 terminal/server.
  */
+@JsonDeserialize(builder = MT4Exception.Builder.class)
 public class MT4Exception extends Exception {
 
     private static final Logger LOG = LoggerFactory.getLogger(MT4Exception.class);
+    public static final String ERROR_CODE = "error_code";
+    public static final String ERROR_CODE_DESCRIPTION = "error_code_description";
+    public static final String ERROR_MESSAGE = "error_message";
 
-    private final Code errorCode;
-    private final String errorCodeDescription;
-    private final String message;
+    @JsonPOJOBuilder(withPrefix = "set")
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public static class Builder {
+        private Code errorCode = Code.UNKNOWN;
+        private String errorCodeDescription;
+        private String message;
+
+        private Builder() {}
+
+        @JsonCreator
+        public static Builder newInstance() {
+            return new Builder();
+        }
+
+        public MT4Exception build() {
+            return new MT4Exception(this);
+        }
+
+        @JsonProperty(ERROR_CODE)
+        public Builder setErrorCode(int errorCode) {
+            this.errorCode = Code.fromCode(errorCode);
+            return this;
+        }
+
+        @JsonProperty(ERROR_CODE_DESCRIPTION)
+        public Builder setErrorCodeDescription(String errorCodeDescription) {
+            this.errorCodeDescription = errorCodeDescription;
+            return this;
+        }
+
+        @JsonProperty(ERROR_MESSAGE)
+        public Builder setMessage(String message) {
+            this.message = message;
+            return this;
+        }
+    }
+
+    public final Code errorCode;
+    public final String errorCodeDescription;
+    public final String message;
 
     /**
-     * Constructor.
+     * Private constructor.
      *
-     * @param errorCode            The error code.
-     * @param errorCodeDescription The error code description.
-     * @param message              Additional details about the error.
+     * @param builder The Exception Builder.
      */
-    public MT4Exception(JsonNode errorCode, JsonNode errorCodeDescription, JsonNode message) {
-        this.errorCode = (errorCode == null ? Code.UNKNOWN : Code.fromCode(errorCode.asInt(Code.UNKNOWN.id)));
-        this.errorCodeDescription = (errorCodeDescription == null ? null : errorCodeDescription.asText(null));
-        this.message = (message == null ? null : message.asText(null));
+    private MT4Exception(Builder builder) {
+        this.errorCode = builder.errorCode;
+        this.errorCodeDescription = builder.errorCodeDescription;
+        this.message = builder.message;
     }
 
     @Override
