@@ -6,7 +6,6 @@ import com.fasterxml.jackson.databind.InjectableValues;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.DoubleNode;
 import com.fasterxml.jackson.databind.node.IntNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -284,6 +283,22 @@ public class MT4Client implements AutoCloseable {
     public Order orderSend(NewOrder newOrder) throws JsonProcessingException, MT4Exception {
         ObjectNode request = Request.DO_ORDER_SEND.build()
                 .setAll(objectMapper.<ObjectNode>valueToTree(newOrder));
+        return getResponse(request, Order.class);
+    }
+
+    /**
+     * Modify a market or pending order.
+     *
+     * @param modifyOrder The {@link ModifyOrder modify-order request}.
+     * @return The modified {@link Order}.
+     * @throws JsonProcessingException If JSON response fails to parse.
+     * @throws MT4Exception            If server had an error.
+     * @see <a href="https://book.mql4.com/trading/ordermodify">https://book.mql4.com/trading/ordermodify</a>
+     * @see <a href="https://book.mql4.com/appendix/limits">https://book.mql4.com/appendix/limits</a>
+     */
+    public Order orderModify(ModifyOrder modifyOrder) throws JsonProcessingException, MT4Exception {
+        ObjectNode request = Request.DO_ORDER_MODIFY.build()
+                .setAll(objectMapper.<ObjectNode>valueToTree(modifyOrder));
         return getResponse(request, Order.class);
     }
 
