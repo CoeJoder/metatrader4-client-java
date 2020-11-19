@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.InjectableValues;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.BooleanNode;
 import com.fasterxml.jackson.databind.node.IntNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -29,6 +30,7 @@ public class MT4Client implements AutoCloseable {
     private static final int DEFAULT_REQUEST_TIMEOUT_MILLIS = 10000;
     private static final int DEFAULT_RESPONSE_TIMEOUT_MILLIS = 10000;
     private static final int DEFAULT_INDICATOR_TIMEOUT = 5000;
+    private static final boolean DEFAULT_CLOSE_IF_OPENED = true;
     private static final String ERROR_CODE = MT4Exception.ERROR_CODE;
     private static final String ERROR_CODE_DESCRIPTION = MT4Exception.ERROR_CODE_DESCRIPTION;
     private static final String ERROR_MESSAGE = MT4Exception.ERROR_MESSAGE;
@@ -39,6 +41,7 @@ public class MT4Client implements AutoCloseable {
     private static final String ARGV = "argv";
     private static final String TIMEOUT = "timeout";
     private static final String TICKET = "ticket";
+    private static final String CLOSE_IF_OPENED = "close_if_opened";
     private static final TypeReference<List<String>> LIST_OF_STRINGS = new TypeReference<>() {};
     private static final TypeReference<HashMap<String, Symbol>> MAP_OF_SYMBOLS = new TypeReference<>() {};
     private static final TypeReference<HashMap<String, Signal>> MAP_OF_SIGNALS = new TypeReference<>() {};
@@ -290,6 +293,52 @@ public class MT4Client implements AutoCloseable {
         ObjectNode request = Request.DO_ORDER_MODIFY.build()
                 .setAll(objectMapper.<ObjectNode>valueToTree(modifyOrder));
         return getResponse(request, Order.class);
+    }
+
+    /**
+     * Close an open order.
+     *
+     * @param ticket The ticket number.
+     * @throws JsonProcessingException If JSON response fails to parse.
+     * @throws MT4Exception            If server had an error.
+     * @see <a href="https://docs.mql4.com/trading/orderdelete">https://docs.mql4.com/trading/orderdelete</a>
+     * @see <a href="https://book.mql4.com/appendix/limits">https://book.mql4.com/appendix/limits</a>
+     */
+    public void orderClose(int ticket) throws JsonProcessingException, MT4Exception {
+        ObjectNode request = Request.DO_ORDER_CLOSE.build()
+                .set(TICKET, IntNode.valueOf(ticket));
+        getResponse(request);
+    }
+
+    /**
+     * Delete a pending order.
+     *
+     * @param ticket        The ticket number.
+     * @param closeIfOpened If true and the order is open, it is closed at market price.  If false and the order is
+     *                      open, an `ERR_INVALID_TICKET` error is raised.
+     * @throws JsonProcessingException If JSON response fails to parse.
+     * @throws MT4Exception            If server had an error.
+     * @see <a href="https://docs.mql4.com/trading/orderdelete">https://docs.mql4.com/trading/orderdelete</a>
+     * @see <a href="https://book.mql4.com/appendix/limits">https://book.mql4.com/appendix/limits</a>
+     */
+    public void orderDelete(int ticket, boolean closeIfOpened) throws JsonProcessingException, MT4Exception {
+        ObjectNode request = Request.DO_ORDER_DELETE.build()
+                .<ObjectNode>set(TICKET, IntNode.valueOf(ticket))
+                .set(CLOSE_IF_OPENED, BooleanNode.valueOf(closeIfOpened));
+        getResponse(request);
+    }
+
+    /**
+     * Delete a pending order.  If order is open, it is closed at market price.
+     *
+     * @param ticket The ticket number.
+     * @throws JsonProcessingException If JSON response fails to parse.
+     * @throws MT4Exception            If server had an error.
+     * @see <a href="https://docs.mql4.com/trading/orderdelete">https://docs.mql4.com/trading/orderdelete</a>
+     * @see <a href="https://book.mql4.com/appendix/limits">https://book.mql4.com/appendix/limits</a>
+     */
+    public void orderDelete(int ticket) throws JsonProcessingException, MT4Exception {
+        orderDelete(ticket, DEFAULT_CLOSE_IF_OPENED);
     }
 
     /**
