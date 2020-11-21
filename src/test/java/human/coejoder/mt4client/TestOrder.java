@@ -101,4 +101,30 @@ public class TestOrder extends TestBase {
         LOG.trace(String.format("New pending sell order: %s", order));
         Assert.assertEquals(order.getOrderType(), orderType, "Wrong order type.");
     }
+
+    @Test
+    public void testModifyOpenOrder() throws JsonProcessingException, MT4Exception {
+        // create market order
+        OrderType orderType = OrderType.OP_BUY;
+        Order order = mt4.orderSend(NewOrder.Builder.newInstance()
+                .setSymbol(symbol.getName())
+                .setOrderType(orderType)
+                .setLots(lots)
+                .build());
+
+        // add sl/tp stops
+        double bid = symbol.getTick().bid;
+        int points = 200;
+        double sl = bid - points * symbol.getPoint();
+        double tp = bid + points * symbol.getPoint();
+
+        // modify order
+        order = mt4.orderModify(ModifyOrder.Builder.newInstance()
+                .setTicket(order.getTicket())
+                .setSl(sl)
+                .setTp(tp)
+                .build());
+        Assert.assertTrue(order.getSl() < bid, "Unexpected stop-loss.");
+        Assert.assertTrue(order.getTp() > bid, "Unexpected take-profit.");
+    }
 }

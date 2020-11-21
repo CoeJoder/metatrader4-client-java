@@ -25,7 +25,7 @@ public class ModifyOrder {
          *
          * @return The modify-order builder instance.
          */
-        public TicketStep newInstance() {
+        public static TicketStep newInstance() {
             return new Builder();
         }
 
