@@ -10,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public class ModifyOrder {
 
-    public static class Builder implements TicketStep {
+    public static class Builder implements OrderStep {
         private int ticket;
         private Double price;
         private Double sl;
@@ -25,7 +25,7 @@ public class ModifyOrder {
          *
          * @return The modify-order builder instance.
          */
-        public static TicketStep newInstance() {
+        public static OrderStep newInstance() {
             return new Builder();
         }
 
@@ -43,7 +43,7 @@ public class ModifyOrder {
          * @return This Builder.
          */
         @Override
-        public Builder setTicket(int ticket) {
+        public Builder setOrder(int ticket) {
             this.ticket = ticket;
             return this;
         }
@@ -53,7 +53,7 @@ public class ModifyOrder {
          * @return This Builder.
          */
         @Override
-        public Builder setTicket(Order order) {
+        public Builder setOrder(Order order) {
             this.ticket = order.getTicket();
             return this;
         }
@@ -104,9 +104,9 @@ public class ModifyOrder {
         }
     }
 
-    public interface TicketStep {
-        Builder setTicket(int ticket);
-        Builder setTicket(Order order);
+    public interface OrderStep {
+        Builder setOrder(int ticket);
+        Builder setOrder(Order order);
     }
 
     public final int ticket;

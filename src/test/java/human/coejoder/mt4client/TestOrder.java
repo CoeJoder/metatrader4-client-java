@@ -27,7 +27,7 @@ public class TestOrder extends TestBase {
         double bid = symbol.getTick().bid;
         int points = 50;
         Order order = mt4.orderSend(NewOrder.Builder.newInstance()
-                .setSymbol(symbol.getName())
+                .setSymbol(symbol)
                 .setOrderType(orderType)
                 .setLots(lots)
                 .setSlPoints(points)
@@ -49,7 +49,7 @@ public class TestOrder extends TestBase {
         double sl = bid + points * symbol.getPoint();
         double tp = bid - points * symbol.getPoint();
         Order order = mt4.orderSend(NewOrder.Builder.newInstance()
-                .setSymbol(symbol.getName())
+                .setSymbol(symbol)
                 .setOrderType(orderType)
                 .setLots(lots)
                 .setSl(sl)
@@ -71,7 +71,7 @@ public class TestOrder extends TestBase {
         int slPoints = 100;
         int tpPoints = 100;
         Order order = mt4.orderSend(NewOrder.Builder.newInstance()
-                .setSymbol(symbol.getName())
+                .setSymbol(symbol)
                 .setOrderType(orderType)
                 .setLots(lots)
                 .setPrice(optimisticBuyPrice)
@@ -91,7 +91,7 @@ public class TestOrder extends TestBase {
         double optimisticSellPrice = symbol.getTick().bid * 2;
         int slippage = 1;
         Order order = mt4.orderSend(NewOrder.Builder.newInstance()
-                .setSymbol(symbol.getName())
+                .setSymbol(symbol)
                 .setOrderType(orderType)
                 .setLots(lots)
                 .setPrice(optimisticSellPrice)
@@ -107,7 +107,7 @@ public class TestOrder extends TestBase {
         // create market order
         OrderType orderType = OrderType.OP_BUY;
         Order order = mt4.orderSend(NewOrder.Builder.newInstance()
-                .setSymbol(symbol.getName())
+                .setSymbol(symbol)
                 .setOrderType(orderType)
                 .setLots(lots)
                 .build());
@@ -120,11 +120,28 @@ public class TestOrder extends TestBase {
 
         // modify order
         order = mt4.orderModify(ModifyOrder.Builder.newInstance()
-                .setTicket(order.getTicket())
+                .setOrder(order)
                 .setSl(sl)
                 .setTp(tp)
                 .build());
         Assert.assertTrue(order.getSl() < bid, "Unexpected stop-loss.");
         Assert.assertTrue(order.getTp() > bid, "Unexpected take-profit.");
+    }
+
+    @Test
+    public void testCloseOpenOrder() throws JsonProcessingException, MT4Exception {
+        // create market order
+        OrderType orderType = OrderType.OP_BUY;
+        Order order = mt4.orderSend(NewOrder.Builder.newInstance()
+                .setSymbol(symbol)
+                .setOrderType(orderType)
+                .setLots(lots)
+                .build());
+
+        // assert that the order was created and is open
+        Assert.assertEquals(order.getOrderType(), orderType);
+
+        // close the order
+        mt4.orderClose(order);
     }
 }
