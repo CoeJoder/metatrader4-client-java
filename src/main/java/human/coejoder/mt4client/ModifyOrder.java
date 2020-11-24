@@ -49,6 +49,16 @@ public class ModifyOrder {
         }
 
         /**
+         * @param order The order to modify.
+         * @return This Builder.
+         */
+        @Override
+        public Builder setTicket(Order order) {
+            this.ticket = order.getTicket();
+            return this;
+        }
+
+        /**
          * @param price The desired open price; applies to pending orders only.  Optional.
          * @return This Builder.
          */
@@ -96,6 +106,7 @@ public class ModifyOrder {
 
     public interface TicketStep {
         Builder setTicket(int ticket);
+        Builder setTicket(Order order);
     }
 
     public final int ticket;

@@ -57,6 +57,16 @@ public class NewOrder {
         }
 
         /**
+         * @param symbol The market symbol.
+         * @return This Builder.
+         */
+        @Override
+        public OrderTypeStep setSymbol(Symbol symbol) {
+            this.symbol = symbol.getName();
+            return this;
+        }
+
+        /**
          * @param orderType The order type.
          * @return This Builder.
          */
@@ -142,6 +152,7 @@ public class NewOrder {
 
     public interface SymbolStep {
         OrderTypeStep setSymbol(String symbol);
+        OrderTypeStep setSymbol(Symbol symbol);
     }
 
     public interface OrderTypeStep {

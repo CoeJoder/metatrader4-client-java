@@ -311,6 +311,19 @@ public class MT4Client implements AutoCloseable {
     }
 
     /**
+     * Close an open order.
+     *
+     * @param order The order to close.
+     * @throws JsonProcessingException If JSON response fails to parse.
+     * @throws MT4Exception            If server had an error.
+     * @see <a href="https://docs.mql4.com/trading/orderdelete">https://docs.mql4.com/trading/orderdelete</a>
+     * @see <a href="https://book.mql4.com/appendix/limits">https://book.mql4.com/appendix/limits</a>
+     */
+    public void orderClose(Order order) throws JsonProcessingException, MT4Exception {
+        orderClose(order.getTicket());
+    }
+
+    /**
      * Delete a pending order.
      *
      * @param ticket        The ticket number.
@@ -329,6 +342,21 @@ public class MT4Client implements AutoCloseable {
     }
 
     /**
+     * Delete a pending order.
+     *
+     * @param order         The order to delete.
+     * @param closeIfOpened If true and the order is open, it is closed at market price.  If false and the order is
+     *                      open, an `ERR_INVALID_TICKET` error is raised.
+     * @throws JsonProcessingException If JSON response fails to parse.
+     * @throws MT4Exception            If server had an error.
+     * @see <a href="https://docs.mql4.com/trading/orderdelete">https://docs.mql4.com/trading/orderdelete</a>
+     * @see <a href="https://book.mql4.com/appendix/limits">https://book.mql4.com/appendix/limits</a>
+     */
+    public void orderDelete(Order order, boolean closeIfOpened) throws JsonProcessingException, MT4Exception {
+        orderDelete(order.getTicket(), closeIfOpened);
+    }
+
+    /**
      * Delete a pending order.  If order is open, it is closed at market price.
      *
      * @param ticket The ticket number.
@@ -339,6 +367,19 @@ public class MT4Client implements AutoCloseable {
      */
     public void orderDelete(int ticket) throws JsonProcessingException, MT4Exception {
         orderDelete(ticket, DEFAULT_CLOSE_IF_OPENED);
+    }
+
+    /**
+     * Delete a pending order.  If order is open, it is closed at market price.
+     *
+     * @param order The order to delete.
+     * @throws JsonProcessingException If JSON response fails to parse.
+     * @throws MT4Exception            If server had an error.
+     * @see <a href="https://docs.mql4.com/trading/orderdelete">https://docs.mql4.com/trading/orderdelete</a>
+     * @see <a href="https://book.mql4.com/appendix/limits">https://book.mql4.com/appendix/limits</a>
+     */
+    public void orderDelete(Order order) throws JsonProcessingException, MT4Exception {
+        orderDelete(order.getTicket());
     }
 
     /**
