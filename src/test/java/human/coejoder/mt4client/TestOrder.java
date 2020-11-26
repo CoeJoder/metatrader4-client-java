@@ -166,4 +166,26 @@ public class TestOrder extends TestBase {
         order = mt4.getOrder(ticket);
         Assert.assertNull(order);
     }
+
+    @Test
+    public void testDeletePendingOrder() throws JsonProcessingException, MT4Exception {
+        // create pending order
+        OrderType orderType = OrderType.OP_BUYLIMIT;
+        double optimisticBuyPrice = symbol.getTick().ask / 2;
+        Order order = mt4.orderSend(NewOrder.Builder.newInstance()
+                .setSymbol(symbol)
+                .setOrderType(orderType)
+                .setLots(lots)
+                .setPrice(optimisticBuyPrice)
+                .build());
+
+        // assert that the order was created and is pending
+        Assert.assertEquals(order.getOrderType(), orderType);
+
+        // delete the order
+        int ticket = order.getTicket();
+        mt4.orderDelete(order);
+        order = mt4.getOrder(ticket);
+        Assert.assertNull(order);
+    }
 }
