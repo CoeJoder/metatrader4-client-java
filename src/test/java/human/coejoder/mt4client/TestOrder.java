@@ -5,9 +5,12 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.util.List;
+
 public class TestOrder extends TestBase {
 
     private static final double MIN_LOTS_BOUND = 1D;
+    private static final boolean CLOSE_IF_OPENED = true;
 
     private Symbol symbol;
     private double lots;
@@ -187,5 +190,25 @@ public class TestOrder extends TestBase {
         mt4.orderDelete(order);
         order = mt4.getOrder(ticket);
         Assert.assertNull(order);
+    }
+
+    @Test
+    public void testOrders() throws JsonProcessingException, MT4Exception {
+        mt4.getOrders();
+    }
+
+    @Test
+    public void testOrdersHistorical() throws JsonProcessingException, MT4Exception {
+        mt4.getOrdersHistorical();
+    }
+
+    @Test
+    public void testCloseAllOrders() throws JsonProcessingException, MT4Exception {
+        for (Order order : mt4.getOrders()) {
+            mt4.orderDelete(order, CLOSE_IF_OPENED);
+        }
+
+        // assert that all orders were deleted
+        Assert.assertEquals(mt4.getOrders().size(), 0);
     }
 }
