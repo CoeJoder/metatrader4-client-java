@@ -5,8 +5,6 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import java.util.List;
-
 public class TestOrder extends TestBase {
 
     private static final double MIN_LOTS_BOUND = 1D;
@@ -146,28 +144,6 @@ public class TestOrder extends TestBase {
 
         // close the order
         mt4.orderClose(order);
-    }
-
-    @Test
-    public void testClosePendingOrder() throws JsonProcessingException, MT4Exception {
-        // create pending order
-        OrderType orderType = OrderType.OP_BUYLIMIT;
-        double optimisticBuyPrice = symbol.getTick().ask / 2;
-        Order order = mt4.orderSend(NewOrder.Builder.newInstance()
-                .setSymbol(symbol)
-                .setOrderType(orderType)
-                .setLots(lots)
-                .setPrice(optimisticBuyPrice)
-                .build());
-
-        // assert that the order was created and is pending
-        Assert.assertEquals(order.getOrderType(), orderType);
-
-        // close the order
-        int ticket = order.getTicket();
-        mt4.orderClose(order);
-        order = mt4.getOrder(ticket);
-        Assert.assertNull(order);
     }
 
     @Test
