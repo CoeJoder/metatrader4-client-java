@@ -8,7 +8,7 @@ import org.testng.annotations.BeforeClass;
 
 public class TestBase {
     protected static final Logger LOG = LoggerFactory.getLogger(TestAccount.class);
-    private static final String ADDRESS = "tcp://win10:28282";
+    private static final String ADDRESS = "tcp://127.0.0.1:28282";
 
     protected MT4Client mt4;
 

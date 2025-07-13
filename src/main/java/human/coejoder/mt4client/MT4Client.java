@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.BooleanNode;
 import com.fasterxml.jackson.databind.node.IntNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
+import com.fasterxml.jackson.databind.node.LongNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.node.TextNode;
 import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
@@ -42,10 +43,14 @@ public class MT4Client implements AutoCloseable {
     private static final String TIMEOUT = "timeout";
     private static final String TICKET = "ticket";
     private static final String CLOSE_IF_OPENED = "close_if_opened";
+    private static final String SYMBOL = "symbol";
+    private static final String TIMEFRAME = "timeframe";
+    private static final String LIMIT = "limit";
     private static final TypeReference<List<String>> LIST_OF_STRINGS = new TypeReference<>() {};
     private static final TypeReference<HashMap<String, Symbol>> MAP_OF_SYMBOLS = new TypeReference<>() {};
     private static final TypeReference<HashMap<String, Signal>> MAP_OF_SIGNALS = new TypeReference<>() {};
     private static final TypeReference<List<Order>> LIST_OF_ORDERS = new TypeReference<>() {};
+    private static final TypeReference<List<OHLCV>> LIST_OF_OHLCV = new TypeReference<>() {};
 
     private final ZContext context;
     private final ZMQ.Socket socket;
@@ -160,6 +165,27 @@ public class MT4Client implements AutoCloseable {
      */
     public List<String> getSignalNames() throws JsonProcessingException, MT4Exception {
         return getResponse(Request.GET_SIGNALS.build(), LIST_OF_STRINGS);
+    }
+
+    /**
+     * Get the list of last limit OHLCV data.
+     *
+     * @param symbol The market symbol.
+     * @param timeframe The width of the bars, in minutes. Use a standard timeframe for a better chance of the broker's server responding successfully.
+     * @param limit The maximum number of bars to return.
+     * @param timeout The timeout in milliseconds to wait for the broker's server to return the data.
+     * @return A list of OHLCV data objects.
+     * @throws JsonProcessingException If JSON response fails to parse.
+     * @throws MT4Exception            If server had an error.
+     */
+    public List<OHLCV> getOHLCV(String symbol, Timeframe timeframe, long limit, long timeout) throws JsonProcessingException, MT4Exception {
+        ObjectNode request = Request.GET_OHLCV.build()
+                .<ObjectNode>set(SYMBOL, TextNode.valueOf(symbol))
+                .<ObjectNode>set(TIMEFRAME, LongNode.valueOf(timeframe.getMinutes()))
+                .<ObjectNode>set(LIMIT, LongNode.valueOf(limit))
+                .set(TIMEOUT, LongNode.valueOf(timeout));
+
+        return getResponse(request, LIST_OF_OHLCV);
     }
 
     /**
