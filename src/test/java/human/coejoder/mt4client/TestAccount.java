@@ -9,7 +9,7 @@ import org.testng.annotations.Test;
  */
 public class TestAccount extends TestBase {
 
-    private static final String ADDRESS = "tcp://win10:28282";
+    private static final String ADDRESS = "tcp://localhost:28282";
     private Account account;
 
     @BeforeClass
